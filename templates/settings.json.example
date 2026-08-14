@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/example-command-proxy.mjs"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/example-session-banner.mjs"
+          }
+        ]
+      }
+    ]
+  },
+  "env": {
+    "EXAMPLE_API_KEY": "${EXAMPLE_API_KEY}"
+  }
+}

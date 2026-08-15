@@ -1,14 +1,52 @@
-# Project Sanitation
+# Sanitização de projeto
 
-Use this for a general "clean up this codebase" pass — dead code, stale
-TODOs, drifting dependencies — when you want an agent that measures before
-it acts instead of guessing at severity or silently taking on risk. It
-forces every claim about the codebase's state to come from an
-actually-executed command, separates mechanical fixes from judgment calls
-that need a human, and works in small steps instead of one sprawling diff.
-On a large codebase, pair it with [parallel specialist
-dispatch](../tools/02-subagent-orchestration.md) instead of running the
-whole thing through one agent.
+## Quando usar
+
+Use este prompt para uma passada geral de "limpar esse código": código
+morto, comentários `TODO`/`FIXME` esquecidos, dependências que ninguém mais
+importa. O ponto central é ter um agente que **mede antes de agir**, em vez
+de chutar a gravidade de cada problema ou assumir riscos silenciosamente por
+conta própria. Em bases de código grandes, combine com o [despacho paralelo
+de subagentes especialistas](../tools/02-subagent-orchestration.md) em vez
+de rodar o prompt inteiro através de um agente só.
+
+## Por que funciona
+
+A lógica é separar **medir** de **agir**. Toda alegação sobre o estado do
+código — quantos warnings existem, se o build passa, quantas dependências
+estão sem uso — precisa vir de um comando real, executado agora, nunca de
+uma estimativa ou de um número lembrado de uma execução anterior. Em cima
+dessa base factual, o prompt separa correções mecânicas e seguras (que
+podem acontecer sem perguntar nada) de decisões que exigem julgamento
+humano — por exemplo, "essa exportação realmente não é usada, ou só parece
+assim porque é consumida via reflection ou import dinâmico?" — com a opção
+conservadora como padrão se ninguém responder. Por fim, ele força execução
+em passos pequenos e verificáveis, cada um comprovado por uma checagem
+real, em vez de um diff (a comparação entre duas versões do código) gigante
+que mistura dez correções não relacionadas e fica impossível revisar com
+confiança.
+
+## Como adaptar os placeholders
+
+- **`[LINT_COMMAND]`** — o comando que roda o linter do projeto (ex.:
+  `npm run lint`, `ruff check .`, `golangci-lint run`).
+- **`[TYPECHECK_COMMAND]`** — o comando que roda a checagem de tipos (ex.:
+  `npm run typecheck`, `tsc --noEmit`, `mypy .`).
+- **`[TEST_COMMAND]`** — o comando que roda a suíte de testes (ex.:
+  `npm test`, `pytest`, `go test ./...`).
+- **`[BUILD_COMMAND]`** — o comando que compila/builda o projeto (ex.:
+  `npm run build`, `make build`).
+- **`[DEPENDENCY_AUDIT_COMMAND]`** — o comando que audita dependências em
+  busca de pacotes sem uso ou com vulnerabilidades (ex.: `npm audit`,
+  `npx depcheck`, `pip-audit`).
+- **`[PACKAGE_MANIFEST]`** — o arquivo que declara as dependências do
+  projeto (ex.: `package.json`, `requirements.txt`, `go.mod`).
+- **`[STACK/FRAMEWORK]`** — descrição curta da stack (ex.: "Next.js +
+  TypeScript", "Django + Python 3.12").
+- **`[ROOT_PATH]`** — o caminho raiz onde o agente deve operar. Útil pra
+  restringir a passada a um pacote específico dentro de um monorepo.
+
+## O prompt
 
 ```
 You are doing a codebase sanitation pass. Goal: leave the repo measurably
@@ -62,11 +100,44 @@ that proves it.
 Codebase: [STACK/FRAMEWORK], root at [ROOT_PATH].
 ```
 
-- On a large codebase, split Step 1's inventory and Step 3's execution
-  across parallel specialist subagents by directory or domain instead of
-  one agent working through everything serially.
-- Re-run Step 0 fresh every time you report a number — a remembered count
-  from earlier in the session is the most common way this drifts from
-  reality.
-- Group 2 is the point of the exercise; resist folding a "probably safe"
-  item into group 1 just because deleting it looks easy.
+## Exemplo de uso
+
+Imagine que você herdou o backend de um app de gestão de tarefas — uma API
+em Node.js/Express com TypeScript que cresceu por dois anos sem nunca
+passar por uma limpeza sistemática. Você preencheria os placeholders
+assim:
+
+- `[LINT_COMMAND]` → `npm run lint`
+- `[TYPECHECK_COMMAND]` → `npm run typecheck`
+- `[TEST_COMMAND]` → `npm test`
+- `[BUILD_COMMAND]` → `npm run build`
+- `[DEPENDENCY_AUDIT_COMMAND]` → `npx depcheck`
+- `[PACKAGE_MANIFEST]` → `package.json`
+- `[STACK/FRAMEWORK]` → "Node.js + Express + TypeScript"
+- `[ROOT_PATH]` → `/apps/api` (se for um monorepo com vários pacotes)
+
+Ao rodar, o agente primeiro executa os cinco comandos do passo 0 e reporta
+os números reais — por exemplo, "14 warnings de lint, build passando, 3
+dependências sem uso, 0 vulnerabilidades". Em seguida lista o inventário:
+alguns exports nunca importados, um punhado de `TODO`s de dois anos atrás,
+e as 3 dependências sem uso. O plano priorizado separa isso em grupo 1
+(remover imports não usados, apagar um arquivo utilitário órfão) e grupo 2
+— por exemplo, uma dependência que parece sem uso mas na verdade é exigida
+como peer dependency (um pacote que a própria dependência espera que o
+projeto host já forneça) por outro pacote, ou um `TODO` que documenta uma
+limitação real e ainda vale a pena manter. Você aprova ou corrige o grupo
+2, o agente executa item por item confirmando cada checagem antes de
+seguir pro próximo, e o relatório final mostra o antes/depois lado a lado
+(ex.: "14 → 2 warnings", "3 → 0 dependências sem uso").
+
+## Dicas
+
+- Em uma base grande, divida o inventário do passo 1 e a execução do passo
+  3 entre subagentes especialistas por diretório ou domínio, em vez de um
+  agente só passando por tudo em série.
+- Rode o passo 0 de novo, do zero, toda vez que for reportar um número —
+  um valor lembrado de mais cedo na sessão é a forma mais comum desse
+  número se afastar da realidade.
+- O grupo 2 é o ponto central do exercício; resista à tentação de encaixar
+  um item "provavelmente seguro" no grupo 1 só porque deletar parece
+  fácil.

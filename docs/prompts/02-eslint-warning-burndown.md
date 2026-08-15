@@ -1,13 +1,54 @@
-# ESLint Warning Burndown
+# ESLint warning burndown
 
-Use this to burn a large lint-warning count down to zero — or to
-deliberately review and re-scope a rule — without quietly changing
-behavior along the way. It's generalized from a real burn-down where the
-single most expensive decision (how far to chase one rule into files it
-wasn't really written for) needed an explicit human call before any code
-moved, not an assumption buried in an implementation plan. Reach for it
-whenever "just fix the warnings" risks turning into a large, silent
-refactor.
+## Quando usar
+
+Use este prompt quando você tem uma pilha grande de warnings de lint pra
+zerar — ou quer revisar e reapertar deliberadamente uma regra específica —
+sem que "só corrigir os warnings" vire, silenciosamente, um refactor
+grande. Ele foi generalizado a partir de uma queima de warnings real, na
+qual a decisão mais cara (até onde vale a pena perseguir uma regra em
+arquivos que não foram escritos pensando nela) precisava de uma resposta
+humana explícita antes de qualquer código mudar — não de uma suposição
+enterrada no meio de um plano de implementação.
+
+## Por que funciona
+
+A lógica é transformar decisão implícita em decisão explícita, e alegação
+em comando. Primeiro, o prompt exige a contagem real de warnings agora —
+nunca um número antigo, porque contagens lembradas divergem da realidade
+rápido demais pra confiar nelas. Depois, ele isola a decisão mais
+arriscada (até onde vale perseguir a regra, ou se faz mais sentido só
+afrouxar o escopo dela) num **portão de decisão** numerado, com opções e
+trade-offs explícitos — deixando claro que "afrouxar a regra" é uma
+mudança de configuração, não uma limpeza de código, pra nunca ser
+apresentada como se fosse a mesma coisa. Os critérios de sucesso viram
+comandos literais em vez de frases vagas do tipo "deveria funcionar". O
+trabalho é dividido em **ondas** — grupos de tarefas com arquivos
+disjuntos, despachadas em paralelo — porque um subagente só enxerga o
+próprio briefing, nunca a conversa de planejamento inteira; por isso a
+lista de pegadinhas precisa ser copiada literalmente em cada uma. E o
+checklist final só é riscado rodando o comando de novo, nunca por
+suposição.
+
+## Como adaptar os placeholders
+
+- **`[RULE_NAME]`** — a regra específica do ESLint (ou de outro linter)
+  que está sendo zerada ou reavaliada — ex.: `no-unused-vars`,
+  `complexity`, `max-lines`. Se a queima cobre o conjunto inteiro de
+  warnings em vez de uma regra só, diga isso explicitamente — o próprio
+  prompt já prevê essa opção ("or the full warning set").
+- **`[LINT_COMMAND]`** — o comando que roda o linter mostrando a saída
+  completa por arquivo e por regra. Atenção: alguns wrappers/proxies de CI
+  resumem a saída em vez de mostrar cada linha — o prompt já orienta a
+  rodar com a flag ou invocação direta que devolve a saída completa
+  quando isso acontecer.
+- **`[TYPECHECK_COMMAND]`** — o comando de checagem de tipos.
+- **`[TEST_COMMAND]`** — o comando que roda a suíte de testes.
+- **`[BUILD_COMMAND]`** — o comando de build.
+- **`[STACK/FRAMEWORK]`** — descrição curta da stack, pra dar contexto ao
+  agente.
+
+## O prompt
 
 ```
 You are planning and executing a lint warning burn-down for [RULE_NAME] (or
@@ -91,12 +132,43 @@ assertion:
 Codebase: [STACK/FRAMEWORK]. Rule(s) in scope: [RULE_NAME].
 ```
 
-- The decision gate in step 1 is the part most tempting to skip because it
-  feels like a formality — in practice it's usually where most of the real
-  work or risk is hiding.
-- Pair step 3 with
-  [05-parallel-wave-dispatch.md](05-parallel-wave-dispatch.md) to get
-  actual parallelism; without it this degrades to one task at a time.
-- Keep the pitfalls list in step 4 growing as you find new ones
-  mid-burndown — a pitfall discovered in wave 2 belongs in every
-  wave-3-and-later brief too.
+## Exemplo de uso
+
+Imagine um monorepo em TypeScript onde subir o limite da regra
+`complexity` do ESLint pra um valor mais rígido revelou 240 warnings no
+projeto inteiro — 180 deles concentrados em seis arquivos legados com
+condicionais muito aninhadas. Você preencheria assim:
+
+- `[RULE_NAME]` → `complexity`
+- `[LINT_COMMAND]` → `npm run lint`
+- `[TYPECHECK_COMMAND]` → `npm run typecheck`
+- `[TEST_COMMAND]` → `npm run test`
+- `[BUILD_COMMAND]` → `npm run build`
+- `[STACK/FRAMEWORK]` → "Next.js + TypeScript monorepo"
+
+O agente roda o lint agora e reporta o número real (240, nunca um número de
+memória). No portão de decisão, ele aponta os seis arquivos legados como o
+ponto caro e arriscado, com contagem real de linhas e arquivos, e
+apresenta as três opções — corrigir tudo, corrigir a maioria e rastrear o
+resto como dívida técnica, ou afrouxar o limite da regra só pra esses seis
+arquivos (deixando explícito que isso é mudança de config, não limpeza de
+código). Sem resposta sua, ele assume a opção A como padrão e segue
+corrigindo o resto do projeto normalmente enquanto espera. Depois, quebra
+o trabalho em ondas de arquivos disjuntos, cada uma com uma pegadinha
+conhecida copiada no briefing (ex.: "essa extração não pode mudar o tipo
+de retorno inferido da função exportada"), roda revisores especialistas
+por onda, e só risca o checklist final depois de rodar `[LINT_COMMAND]`,
+`[TYPECHECK_COMMAND]`, `[TEST_COMMAND]` e `[BUILD_COMMAND]` de novo, de
+verdade.
+
+## Dicas
+
+- O portão de decisão do passo 1 é a parte mais tentadora de pular,
+  porque parece formalidade — na prática, é onde costuma estar a maior
+  parte do trabalho ou do risco real.
+- Combine o passo 3 com
+  [`05-parallel-wave-dispatch.md`](05-parallel-wave-dispatch.md) pra ter
+  paralelismo de verdade; sem isso, isso degrada pra uma tarefa por vez.
+- Mantenha a lista de pegadinhas do passo 4 crescendo à medida que você
+  encontra novas no meio da queima — uma pegadinha descoberta na onda 2
+  pertence a toda onda 3 em diante também.

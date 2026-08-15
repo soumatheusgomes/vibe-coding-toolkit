@@ -1,14 +1,51 @@
-# Parallel Wave Dispatch
+# Parallel wave dispatch
 
-Use this to turn a list of tasks — from a plan, an epic, or a batch of
-independent fixes — into safe parallel execution instead of one agent
-working through them serially. The two rules in step 2 (no dependency, no
-file overlap) are what make concurrent agents safe to run at all; skip
-either and you get silent conflicts, or a wave that wasn't actually
-independent. Directly implements the pattern in [subagent
-orchestration](../tools/02-subagent-orchestration.md) and [the parallel
-dispatch rule
-template](../../templates/rules/parallel-subagent-driven-development.md).
+## Quando usar
+
+Use este prompt quando você já tiver uma lista de tarefas — saída de um
+plano, de uma epic (conjunto maior de tarefas relacionadas), ou só um
+lote de correções independentes — e quiser transformar isso em ondas de
+execução paralela seguras (grupos de tarefas que rodam ao mesmo tempo) em
+vez de um agente único mastigando tarefa por tarefa em série. É a versão
+"preencha os espaços" do mesmo padrão descrito em [orquestração de
+subagentes](../tools/02-subagent-orchestration.md) e no [template de
+regra de dispatch
+paralelo](../../templates/rules/parallel-subagent-driven-development.md).
+
+## Por que funciona
+
+As duas regras da Etapa 2 — nenhuma dependência entre as tarefas e
+nenhuma sobreposição de arquivo — são o que torna seguro rodar vários
+agentes ao mesmo tempo; quebrar qualquer uma das duas gera conflito
+silencioso (dois agentes escrevendo por cima um do outro no mesmo
+arquivo) ou uma **onda** que na verdade não era independente. Quando fica
+incerto se essas condições valem pra uma tarefa, o prompt manda tratar
+essa tarefa como dependente de tudo que já foi listado — ou seja, o
+padrão seguro é degradar pra execução em série, nunca arriscar um falso
+paralelismo. Do lado dos commits, cada implementador só edita e reporta o
+que mudou; quem orquestra é o único que faz commit, um de cada vez, em
+ordem fixa, sempre capturando o HEAD (a referência pro commit mais
+recente do branch) na hora, nunca reaproveitando um HEAD capturado antes
+— isso elimina qualquer corrida entre agentes tentando commitar ao mesmo
+tempo.
+
+## Como adaptar os placeholders
+
+- **`[FEATURE/PLAN/TASK LIST]`** — aparece duas vezes: na primeira linha
+  (o que você quer quebrar em ondas) e na última ("Plan/task list:").
+  Cole ali a lista de tarefas, o plano ou a epic que você já tem em mãos;
+  se for longo, pode repetir só um nome ou resumo curto na segunda
+  ocorrência em vez do texto inteiro de novo.
+- **`[BACKEND_ROLE]`, `[FRONTEND_ROLE]`, `[DB_ROLE]`, `[TEST_ROLE]`** —
+  são só exemplos de papel/especialista pro campo `Owner:` de cada
+  tarefa. Troque pelos nomes reais dos agentes especialistas do seu
+  projeto (se você usa Claude Code com uma tabela de agentes no
+  `CLAUDE.md`, use exatamente os nomes de lá, pra que o campo `Owner:` já
+  aponte pro agente certo pra disparar). Pode adicionar ou remover
+  papéis à vontade — o próprio prompt avisa pra usar "whatever roles
+  this project defines".
+
+## O prompt
 
 ```
 Break [FEATURE/PLAN/TASK LIST] into parallel execution waves. Follow this
@@ -60,12 +97,52 @@ For every wave:
 Plan/task list: [FEATURE/PLAN/TASK LIST].
 ```
 
-- Default to `Depends-on: everything already listed` for anything
-  uncertain — worst case you lose some parallelism, not gain a race
-  condition.
-- Fixed commit order per wave (not "whichever task finishes first") keeps
-  HEAD easy to reason about — capture it immediately before that task's
-  own commit, never earlier.
-- When two tasks genuinely can't avoid touching the same files, treat that
-  as a signal to merge them into one task or isolate them in separate
-  worktrees — not to force them into the same wave.
+## Exemplo de uso
+
+Imagine um projeto pequeno com quatro tarefas na fila. O placeholder
+`[FEATURE/PLAN/TASK LIST]` vira essa lista, e os papéis genéricos
+(`[BACKEND_ROLE]`, `[FRONTEND_ROLE]`, `[DB_ROLE]`) viram os agentes reais
+do projeto:
+
+- **T01** — criar a tabela `relatorios` no banco (migração). `Files:`
+  `src/db/schema/relatorios.ts`, `drizzle/*`. `Depends-on:` none.
+  `Owner:` database-architect.
+- **T02** — endpoint que exporta relatórios em CSV, lendo da tabela
+  `relatorios`. `Files:` `src/app/api/relatorios/export/route.ts`.
+  `Depends-on:` T01. `Owner:` backend-specialist.
+- **T03** — botão "Exportar CSV" na tela de relatórios, chamando o
+  endpoint novo. `Files:` `src/components/relatorios/BotaoExportar.tsx`.
+  `Depends-on:` T02. `Owner:` frontend-specialist.
+- **T04** — corrigir um typo no texto da tela de login, sem relação
+  nenhuma com as outras três. `Files:`
+  `src/components/auth/FormLogin.tsx`. `Depends-on:` none. `Owner:`
+  frontend-specialist.
+
+Na Etapa 2, o agente monta a tabela de ondas: T01 e T04 caem na **mesma
+onda**, porque nenhuma depende da outra e os arquivos não se cruzam — a
+regra olha só pra dependência e arquivo, não pra quem é o owner. T02 só
+pode entrar numa onda depois que T01 for commitado (onda 2), e T03 só
+depois de T02 (onda 3) — mesmo T03 e T04 não tendo nenhum arquivo em
+comum, T03 não entra na onda 1 porque depende de T02, que ainda nem
+existe.
+
+Na Etapa 3: a onda 1 dispara os implementadores de T01 e T04 juntos, num
+único lote; nenhum dos dois faz commit sozinho, eles só reportam o que
+mudou. Quem orquestra commita T01 e depois T04 (ordem fixa), capturando o
+HEAD de novo antes de cada commit. Os revisores de T01 e T04 rodam juntos
+em seguida. Só então a onda 2 (só T02) começa — e por fim a onda 3 (só
+T03).
+
+## Dicas
+
+- Na dúvida, use `Depends-on: everything already listed` ("depende de
+  tudo que já foi listado") — na pior das hipóteses você perde um pouco
+  de paralelismo, nunca ganha uma condição de corrida.
+- Ordem de commit fixa por onda (não "quem terminar primeiro") mantém o
+  HEAD fácil de acompanhar — capture-o bem antes do commit daquela
+  tarefa específica, nunca antes disso.
+- Quando duas tarefas genuinamente não conseguem evitar tocar nos mesmos
+  arquivos, trate isso como sinal pra juntar as duas numa tarefa só ou
+  isolar cada uma num worktree separado (uma cópia paralela do
+  repositório, em outra pasta, isolada da principal) — não force as duas
+  pra mesma onda.

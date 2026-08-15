@@ -20,10 +20,36 @@ Um grafo persistente responde esse tipo de pergunta numa consulta só, em vez de
 
 ## Como instalar
 
+> 💬 **Peça pro seu agente instalar:**
+>
+> ```
+> Instale o Graphify pra mim: rode `uv tool install graphifyy` e depois `graphify claude install`.
+> ```
+>
+> O Claude Code tem acesso a terminal (Bash) — ele roda os comandos e confirma que funcionou. Você não precisa abrir um terminal separado nem saber a diferença entre `pip`/`uv`/`npm`. Prefere fazer você mesmo? Os comandos são exatamente os mesmos, é só rodar direto no seu terminal.
+
+A instalação tem duas etapas: instalar o pacote Python e, depois, conectar o comando `graphify` ao seu agente de IA — sem essa segunda etapa, o Graphify fica instalado mas não integrado a nada.
+
+**1. Instale o pacote.** `uv` (gerenciador de pacotes Python mais rápido que o `pip`) é a opção preferida — o próprio README do projeto avisa que `pip install` pode instalar o pacote num Python diferente daquele que o comando `graphify` resolve em tempo de execução, causando erro de módulo não encontrado:
+
 ```bash
-pip install graphifyy
-# ou, com uv (gerenciador de pacotes Python mais rápido que o pip):
-uv tool install graphifyy
+uv tool install graphifyy   # preferida
+pipx install graphifyy      # alternativa, também isola o ambiente
+pip install graphifyy       # funciona, mas é a menos recomendada das três
+```
+
+**2. Conecte ao seu agente de IA:**
+
+```bash
+graphify install          # detecta e registra em todos os agentes de IA instalados
+graphify claude install   # ou, especificamente pro Claude Code
+```
+
+Isso grava a seção do Graphify no `CLAUDE.md` do projeto e configura automaticamente o hook de orientação (o mesmo tipo descrito na seção **Hook de orientação**, mais abaixo) — sem precisar editar nada manualmente. Duas variantes úteis:
+
+```bash
+graphify install --project           # escopo do projeto atual, em vez do perfil global do usuário
+graphify install --project --strict  # modo estrito: bloqueia a primeira leitura crua de um arquivo antes de consultar o grafo
 ```
 
 Confirme que instalou certo:
@@ -56,9 +82,13 @@ Vamos indexar um projeto de exemplo do zero, rodar duas consultas, e ver o forma
 
 ### 1. Instale
 
-```bash
-pip install graphifyy
-```
+> 💬 **Peça pro seu agente instalar:**
+>
+> ```
+> Instale o Graphify pra mim: rode `uv tool install graphifyy` e depois `graphify claude install`.
+> ```
+>
+> O Claude Code tem acesso a terminal (Bash) — ele roda os comandos e confirma que funcionou. Você não precisa abrir um terminal separado nem saber a diferença entre `pip`/`uv`/`npm`. Prefere fazer você mesmo? Os comandos são exatamente os mesmos, é só rodar direto no seu terminal.
 
 ### 2. Rode o pipeline completo
 
@@ -243,7 +273,7 @@ Veja [Boas práticas de hooks](10-hooks-best-practices.md) pras regras gerais qu
 
 ## Dicas e pegadinhas
 
-**O nome do pacote e o nome do comando são diferentes.** `pip install graphifyy` (dois "y"), mas o comando no terminal é `graphify` (um "y"). Fácil de digitar errado nos dois sentidos.
+**O nome do pacote e o nome do comando são diferentes.** `uv tool install graphifyy` (dois "y"), mas o comando no terminal é `graphify` (um "y"). Fácil de digitar errado nos dois sentidos.
 
 **Não configure nenhum provedor de LLM à toa.** Você só precisa de uma chave de API (ou de deixar o Graphify usar o agente que está chamando ele) se o seu corpus tiver material fora de código — documentação, artigos, imagens. Um repositório só de código não pede nada disso.
 

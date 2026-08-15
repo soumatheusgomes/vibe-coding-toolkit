@@ -14,10 +14,13 @@ Um seletor CSS quebra assim que o layout de uma página muda. Uma abordagem só 
 
 ## Como instalar
 
-```bash
-npm i -g agent-browser
-agent-browser install
-```
+> 💬 **Peça pro seu agente instalar:**
+>
+> ```
+> Instale o agent-browser pra mim: rode `npm i -g agent-browser` e depois `agent-browser install`.
+> ```
+>
+> O Claude Code tem acesso a terminal (Bash) — ele roda os comandos e confirma que funcionou. Você não precisa abrir um terminal separado nem saber a diferença entre `pip`/`uv`/`npm`. Prefere fazer você mesmo? Os comandos são exatamente os mesmos, é só rodar direto no seu terminal.
 
 O primeiro comando instala a CLI globalmente; o segundo baixa e prepara o navegador Chrome/Chromium que ela vai controlar (parecido com o que `playwright install` faz, pra quem já usou Playwright).
 
@@ -57,10 +60,13 @@ Esse mesmo motivo é por que este documento também evita duplicar uma referênc
 
 ### 1. Instale
 
-```bash
-npm i -g agent-browser
-agent-browser install
-```
+> 💬 **Peça pro seu agente instalar:**
+>
+> ```
+> Instale o agent-browser pra mim: rode `npm i -g agent-browser` e depois `agent-browser install`.
+> ```
+>
+> O Claude Code tem acesso a terminal (Bash) — ele roda os comandos e confirma que funcionou. Você não precisa abrir um terminal separado nem saber a diferença entre `pip`/`uv`/`npm`. Prefere fazer você mesmo? Os comandos são exatamente os mesmos, é só rodar direto no seu terminal.
 
 ### 2. Primeiro comando: puxe as instruções reais
 

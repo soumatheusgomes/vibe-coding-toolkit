@@ -109,6 +109,12 @@ skill de domínio decidir o que escrever.
 /plugin install superpowers@claude-plugins-official
 ```
 
+Repare: isso não é um comando de terminal — é texto que você cola direto
+no prompt do Claude Code, dentro da sessão já aberta. Digitar
+`/plugin install ...` ali já é, por definição, pedir pro agente instalar
+o plugin: é o próprio Claude Code que interpreta e executa os dois
+comandos, não um terminal separado.
+
 **Veja funcionando:** peça algo propositalmente aberto — não um "conserte
 esse typo", mas algo com mais de uma interpretação razoável. Por exemplo:
 
@@ -156,6 +162,10 @@ funciona.
 /plugin install ponytail@ponytail
 ```
 
+Mesmo lembrete da Superpowers: isso roda dentro da sessão do Claude Code,
+não num terminal separado — digitar `/plugin install` ali já é o pedido
+de instalação em si.
+
 **Veja funcionando:** peça algo que convida a over-engineering. Por
 exemplo:
 
@@ -193,6 +203,9 @@ da frase.
 /plugin install caveman@caveman
 ```
 
+De novo: cole dentro da sessão do Claude Code, não num terminal à parte —
+o comando `/plugin install` já é, sozinho, o pedido pro agente instalar.
+
 **Veja funcionando:** faça uma pergunta comum de desenvolvimento e compare
 o tom da resposta antes/depois de instalar — ou simplesmente rode:
 
@@ -220,6 +233,25 @@ siga adiante sem eles.
 Com os três pilares instalados, é hora de sair do "Claude Code genérico"
 pro "Claude Code que conhece o seu projeto". Isso significa dois arquivos:
 `CLAUDE.md` na raiz do projeto, e `.claude/settings.json`.
+
+**Atalho, se o objetivo agora é velocidade:** os passos 1 a 4 abaixo são
+o caminho manual — pra quem quer entender cada peça e montar com controle
+total sobre o que entra em cada arquivo. Se preferir ir rápido, o plugin
+`aia-harness` (fonte `leandrosilvaferreira/claude-plugins-registry`, já
+citada na tabela de fontes do [Guia de instalação](01-installation.md))
+tem um comando que escaneia o projeto e monta boa parte dessa estrutura
+sozinho — agentes especialistas, regras, hooks, memória, `settings.json`:
+
+```bash
+/plugin marketplace add leandrosilvaferreira/claude-plugins-registry
+/plugin install aia-harness@leandro-plugins-registry
+/aia-harness:init
+```
+
+Assim como os plugins da Parte 2, esses três comandos rodam dentro da
+sessão do Claude Code, não num terminal separado. Depois do
+`/aia-harness:init`, use o resto deste playbook pra entender o que foi
+gerado e por quê, em vez de montar cada arquivo do zero.
 
 ### 1. Copie e preencha o `CLAUDE.md`
 
@@ -603,15 +635,29 @@ centrais", "o que quebra se eu mudar aqui" numa consulta só, em vez de
 dezenas de leituras exploratórias repetidas a cada sessão nova.
 
 ```bash
-pip install graphifyy
-# ou
 uv tool install graphifyy
+graphify claude install
 ```
 
 O pacote no PyPI é `graphifyy`, com dois "y" — o comando que ele instala é
-`graphify`, com um só. Nenhuma chave de API é necessária pra um corpus só
-de código: a extração é baseada em AST (a árvore sintática do código,
-extraída sem executar nada) e roda inteiramente local.
+`graphify`, com um só. `uv tool install` é a forma preferida: instalar só
+com `pip install` pode colocar o pacote num Python diferente do runtime
+que o CLI do `graphify` usa, e o comando falha depois; `pipx install
+graphifyy` também é uma opção válida, pelo mesmo motivo de isolamento.
+
+Depois de instalar o pacote, rode `graphify claude install` — conecta
+especificamente ao Claude Code, gravando o `CLAUDE.md` e configurando o
+hook automaticamente — ou `graphify install`, que detecta e registra em
+qualquer assistente de IA já instalado na máquina. Nenhuma chave de API é
+necessária pra um corpus só de código: a extração é baseada em AST (a
+árvore sintática do código, extraída sem executar nada) e roda
+inteiramente local.
+
+> 💬 **Peça pro seu agente:**
+> ```
+> Instale o Graphify pra mim: rode `uv tool install graphifyy` e depois `graphify claude install`.
+> ```
+> O Claude Code roda os dois comandos e confirma que funcionou — você não precisa fazer isso manualmente.
 
 Saiba mais: [Graphify](tools/07-graphify.md).
 
@@ -628,6 +674,12 @@ de layout do que um seletor CSS.
 npm i -g agent-browser
 agent-browser install
 ```
+
+> 💬 **Peça pro seu agente:**
+> ```
+> Instale o agent-browser pra mim: rode `npm i -g agent-browser` e depois `agent-browser install`.
+> ```
+> O Claude Code roda os dois comandos e confirma que funcionou — você não precisa fazer isso manualmente.
 
 Saiba mais: [agent-browser](tools/11-agent-browser.md).
 

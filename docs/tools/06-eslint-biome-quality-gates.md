@@ -371,6 +371,12 @@ O resto do texto explicou o raciocínio por trás de cada peça. Essa seção
 monta as peças, em ordem, num projeto TypeScript novo — ajuste nomes de
 pacote e regras pro seu próprio framework onde for o caso.
 
+Se preferir delegar esse tutorial inteiro pra um agente de código,
+[`07-eslint-complete-setup.md`](../prompts/07-eslint-complete-setup.md) é
+a versão em formato de prompt — cobre a mesma filosofia, mais fronteiras
+de arquitetura, regras caseiras e o tier de lint consciente de tipo,
+prontos pra colar num agente e adaptar aos placeholders do seu projeto.
+
 ### 1. Instalar as duas ferramentas
 
 ```bash

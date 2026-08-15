@@ -2,6 +2,12 @@
 
 ## Quando usar
 
+Se o projeto ainda não tem uma configuração de ESLint decente pra
+começar, use antes o [`07-eslint-complete-setup.md`](07-eslint-complete-setup.md)
+— ele monta a configuração do zero; este prompt aqui serve pra depois,
+quando os avisos de uma configuração já existente acumularam e é hora
+de zerá-los.
+
 Use este prompt quando você tem uma pilha grande de warnings de lint pra
 zerar — ou quer revisar e reapertar deliberadamente uma regra específica —
 sem que "só corrigir os warnings" vire, silenciosamente, um refactor

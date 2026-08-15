@@ -151,6 +151,7 @@ Um detalhe de idioma, pra não confundir: este README e toda a explicação dent
 | [Brainstorm até plano](docs/prompts/04-brainstorm-to-plan.md) | Prompt pra transformar um pedido em aberto num plano de implementação de verdade, com pergunta de esclarecimento antes de qualquer código e uma checagem de verificação em cada passo do plano. |
 | [Parallel wave dispatch](docs/prompts/05-parallel-wave-dispatch.md) | Prompt pra quebrar uma lista de tarefas em ondas paralelas seguras. As duas regras que sustentam tudo — sem dependência entre tarefas da mesma onda, sem sobreposição de arquivo — são o que evita um agente sobrescrever o trabalho do outro. |
 | [Memory bootstrap](docs/prompts/06-memory-bootstrap.md) | Prompt pra configurar do zero o sistema de memória em duas camadas num projeto novo: um índice rápido sempre carregado, mais um caminho de migração disciplinado pro armazenamento de longo prazo. |
+| [Setup completo de ESLint](docs/prompts/07-eslint-complete-setup.md) | Prompt extenso e opinativo pra montar um `eslint.config.mjs` (ESLint 9, flat config) do zero: erro só pro que é sempre bug, aviso pro que é pressão de refatoração, regras caseiras pra invariante de domínio, lint consciente de tipo isolado num tier separado não-bloqueante. Complementa o burndown acima — use este primeiro pra ter uma config boa, aquele depois pra zerar avisos acumulados. |
 
 <div align="right"><a href="#topo">▲ voltar ao topo</a></div>
 

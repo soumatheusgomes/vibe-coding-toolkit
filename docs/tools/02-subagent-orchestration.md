@@ -71,6 +71,14 @@ O que importa é o formato: escopo estreito, um gatilho de uso claro, e zero
 sobreposição com os vizinhos da tabela. Se dois especialistas do seu elenco
 cobrem o mesmo gatilho, um deles está sobrando.
 
+Isto é sobre o **padrão** de uso — como montar o elenco e rotear tarefas
+pra ele. O **mecanismo** técnico que declara um subagente de verdade (o
+arquivo `.claude/agents/*.md`, a precedência de qual nível de modelo cada
+despacho usa, o isolamento via `isolation: worktree`) é coberto pela
+[documentação oficial de subagents do Claude Code](https://code.claude.com/docs/en/sub-agents) —
+não é redundante com este documento, é a base técnica sobre a qual o padrão
+aqui é construído.
+
 ## Parte B — disciplina de escolha de modelo
 
 Trate isto como uma regra de bolso, não uma lei rígida: **defina
@@ -92,6 +100,62 @@ A regra de bolso é: use a camada mais barata que ainda resolve o problema.
 - **Camada de raciocínio mais forte** (por exemplo, um modelo classe Opus) —
   reservada pra decisões de arquitetura genuinamente difíceis, não pra
   volume de trabalho.
+
+## Antes das ondas: como decidir a quebra de tarefas
+
+Tudo que a Parte C ensina — marcar `Files:` e `Depends-on:`, agrupar em
+ondas, serializar commits — parte de uma pergunta que ela mesma não
+responde: quem decide, afinal, onde cortar o trabalho em tarefas? Essa
+decisão acontece **antes** da mecânica de ondas, não depois de o plano já
+estar montado.
+
+O post oficial da Anthropic
+[Multi-Agent Systems: When to Use Them](https://claude.com/blog/building-multi-agent-systems-when-and-how-to-use-them)
+(jan/2026) trata exatamente dessa pergunta, com um achado que vale citar
+direto: rodar múltiplos agentes custa de **3 a 10 vezes mais tokens** do
+que um agente só resolvendo a mesma tarefa sozinho. Esse custo só se paga
+em três cenários — fora deles, multiagente é despesa sem retorno:
+
+- **Proteção de contexto** — isolar algo que geraria muito ruído no
+  contexto principal (uma investigação grande, uma saída verbosa) numa
+  instância separada, em vez de poluir a janela de contexto de quem
+  coordena.
+- **Paralelização real** — trabalho genuinamente independente, que dá pra
+  rodar ao mesmo tempo sem uma tarefa esperar o resultado da outra.
+- **Especialização genuína** — a tarefa exige um checklist, um contexto ou
+  um conjunto de instruções que um agente generalista não carrega por
+  padrão.
+
+O princípio central do post é este: decomponha por **fronteira de
+contexto isolável** — o que cada tarefa *precisa saber* pra fazer o
+próprio trabalho, sem depender do contexto completo de nenhuma outra
+tarefa — e não por tipo de problema, nem por fase do trabalho.
+
+O post nomeia explicitamente os anti-padrões mais comuns dessa decisão —
+vale conhecer pelos nomes, porque são fáceis de cair sem perceber:
+
+- **Decomposição centrada no problema** — dividir por área temática ("um
+  agente pro banco, um pro front-end, um de segurança") em vez de por
+  fronteira de contexto real.
+- **Divisão sequencial por fase** — plano, implementação e teste como
+  agentes **separados**, quando na prática os três compartilham o mesmo
+  contexto de trabalho e deveriam ser uma unidade só — ou, no mínimo, não
+  fingir uma independência que não existe.
+- Separar **componentes fortemente acoplados** entre si, só porque são,
+  tecnicamente, "duas partes".
+- Trabalho que depende de **estado compartilhado mutável** — se uma
+  tarefa precisa ler o que outra está escrevendo *enquanto* ela escreve,
+  elas não são duas tarefas independentes, são uma tarefa só fingindo ser
+  duas.
+
+Isso é uma camada **anterior e complementar** à execução em ondas da
+Parte C, não uma substituta dela: o post acima ajuda a decidir **como
+quebrar** o trabalho em tarefas, o suficiente pra cada uma valer a pena
+existir sozinha; a Parte C ensina **como executar** essas tarefas com
+segurança, uma vez que elas já foram quebradas — arquivos disjuntos, sem
+dependência cruzada, commit sempre serializado por quem orquestra. Uma
+pergunta não substitui a outra; a segunda só faz sentido depois que a
+primeira já foi respondida.
 
 ## Parte C — execução em ondas paralelas
 

@@ -22,6 +22,8 @@ Programar com IA parece simples até você perceber que "colar um prompt grande 
 
 Cada peça daqui existe porque resolveu um problema real: sessões que perdiam o fio da meada, agentes que construíam mais do que o pedido, warnings de lint (avisos de uma ferramenta que analisa o código atrás de padrões arriscados, sem precisar executá-lo) que ninguém nunca zerava, lições caras que se repetiam a cada sessão nova porque nada ficava registrado. Nada foi adicionado só "porque parecia legal" — se está aqui, é porque já evitou um problema de verdade pelo menos uma vez.
 
+Um parênteses de transparência: as práticas daqui vêm de um projeto privado real de produção (fintech, sob NDA) — o código de origem não pode ser mostrado, então o que existe aqui é o método já extraído e genericizado, não um changelog público daquele projeto. Por isso o histórico *deste* repositório é curto — aqui é onde o método é documentado, não onde ele foi construído.
+
 Sou o Matheus Gomes — no Instagram ([@matheusgomes](https://instagram.com/matheusgomes)) falo sobre prompt e IA pra devs — e esse repositório é a versão organizada, testável e sem enrolação de tudo que venho ensinando por lá.
 
 **Pra quem é:** devs de qualquer nível — se um termo técnico aparecer, ele é explicado ali mesmo, na primeira vez — que já usam ou estão testando Claude Code / Codex e querem um fluxo estruturado em vez de tentativa e erro.
@@ -33,11 +35,13 @@ Sou o Matheus Gomes — no Instagram ([@matheusgomes](https://instagram.com/math
 >
 > Se você só for configurar **uma** coisa deste repositório, que seja essa: leia [`docs/tools/01-superpowers.md`](docs/tools/01-superpowers.md) antes de qualquer outra ferramenta daqui.
 
+Dois outros documentos merecem destaque igual, mesmo sem holofote de ferramenta de terceiro puxando atenção pra eles: [orquestração de subagentes em ondas paralelas](docs/tools/02-subagent-orchestration.md) (o protocolo que elimina colisão de arquivo e disputa de commit *na estrutura*, não na disciplina — nada parecido apareceu em nenhuma coleção de terceiro que pesquisei pra este repositório) e [quality gates de ESLint/Biome](docs/tools/06-eslint-biome-quality-gates.md) (promoção de aviso pra erro como migração rastreada, fronteira de arquitetura imposta via lint). Se Superpowers é o motor, esses dois são o chassi.
+
 ## <a id="comece-por-aqui"></a>🚀 Comece por aqui
 
 Se é sua primeira vez por aqui, não tente ler tudo em ordem — vá direto pro **[Playbook completo](docs/02-playbook-onboarding.md)**. É o guia de onboarding do zero até um projeto real com o setup inteiro funcionando, com um exemplo ponta a ponta em vez de teoria solta.
 
-Um teaser do que te espera lá — os primeiros comandos, antes de qualquer coisa mais sofisticada:
+Um teaser do que te espera lá — os primeiros comandos, antes de qualquer coisa mais sofisticada. Repare que isso é "copie o arquivo certo, digite o comando certo" — não existe (ainda) um instalador que detecta sua stack sozinho e escreve tudo por você. Se é exatamente isso que você quer, pule direto pro atalho do `aia-harness` (`/aia-harness:init`) descrito em [`docs/01-installation.md`](docs/01-installation.md#2-plugins-e-clis-independentes) — ele monta a base sozinho; o resto deste repositório vira material pra entender o que foi montado, não pra montar do zero:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
@@ -66,7 +70,7 @@ Isso já deixa o Claude Code instalado, a ferramenta mais importante do toolkit 
 
 Da instalação ao primeiro commit revisado — essa é a jornada completa, e onde cada ferramenta do toolkit entra nela. Uma peça central aparece cedo: **subagentes** (instâncias separadas do agente principal, cada uma especialista num papel — revisor, banco de dados, testes) fazem o trabalho pesado enquanto a sessão principal só planeja e decide.
 
-Nas caixas abaixo, o caminho principal é a linha do tempo de cima a baixo; os círculos são as ferramentas de suporte, que não são etapas — ficam ativas o tempo inteiro, moldando como as etapas acontecem por baixo dos panos.
+Nas caixas abaixo, o caminho principal é a linha do tempo da esquerda pra direita; os círculos são as ferramentas de suporte, que não são etapas — ficam ativas o tempo inteiro, moldando como as etapas acontecem por baixo dos panos. Quality gates é uma dessas — protege todo commit, não é um passo único que se cumpre uma vez e some.
 
 ```mermaid
 flowchart LR
@@ -75,30 +79,31 @@ flowchart LR
     Brain["💡 Brainstorm"]
     Plan["📝 Plano"]
     Waves["🌊 Orquestração de subagentes<br/>ondas paralelas"]
-    Gate["🚦 Quality gates"]
     Review["🔍 Revisão multi-agente"]
     Ship["🚀 Commit / Ship"]
 
-    Install --> Setup --> Brain --> Plan --> Waves --> Gate --> Review --> Ship
+    Install --> Setup --> Brain --> Plan --> Waves --> Review --> Ship
 
     subgraph SP["⭐ Superpowers"]
         Brain
         Plan
     end
 
-    Graphify(("🕸️ Graphify"))
+    Graphify(("🕸️ Graphify<br/>+ Context7"))
     RTK(("🪙 RTK"))
     Persona(("🦥 Ponytail + 🗣️ Caveman"))
     Memory(("🧠 Memória<br/>Claude + Obsidian"))
+    Gate(("🚦 Quality gates"))
 
     Graphify -. orienta antes de codar .-> Brain
     RTK -. barateia a sessão inteira .-> Waves
     Persona -. governa o quê e o como .-> Waves
     Memory -. contexto ao começar .-> Setup
+    Gate -. protege todo commit .-> Ship
     Ship -. registra aprendizados .-> Memory
 ```
 
-Repare que **RTK**, **Ponytail**, **Caveman** e o grafo do **Graphify** não são paradas do caminho — são camadas ativas o tempo todo. Já a memória (**sistema do Claude** + **Obsidian**) entra dos dois lados: carrega contexto no início da sessão e grava o que valeu a pena aprender no final.
+Repare que **RTK**, **Ponytail**, **Caveman**, o grafo do **Graphify** (com o **Context7** ao lado, orientando antes de codar) e os **Quality gates** não são paradas do caminho — são camadas ativas o tempo todo. Uma ressalva sobre o RTK especificamente: ele está aqui porque é parte real do fluxo diário do autor, mas [é documentado como padrão pra replicar](docs/tools/03-rtk-token-proxy.md), não como binário público pra instalar — os outros nós deste diagrama, sim. Já a memória (**sistema do Claude** + **Obsidian**) entra dos dois lados: carrega contexto no início da sessão e grava o que valeu a pena aprender no final.
 
 <div align="right"><a href="#topo">▲ voltar ao topo</a></div>
 
@@ -140,6 +145,9 @@ Um detalhe de idioma, pra não confundir: este README e toda a explicação dent
 | [Sistema de memória do Claude](docs/tools/09-claude-memory-system.md) | Um índice sempre carregado (`MEMORY.md`) para as lições caras de aprender de novo — um erro corrigido, uma regra de negócio que o código não deixa óbvia. Vem com política de crescimento clara pra ele nunca inchar até virar ruído que ninguém lê. |
 | [Hooks — boas práticas](docs/tools/10-hooks-best-practices.md) | Como escrever um hook (um pedacinho de código que roda automaticamente antes ou depois de uma ação do agente) que falha de forma segura em vez de travar a sessão inteira. Cobre um bug sutil e recorrente: `JSON.parse("null")` não lança erro, e isso engana até guarda defensiva. |
 | [agent-browser](docs/tools/11-agent-browser.md) | CLI de automação de navegador construída para agentes de IA, não adaptada de ferramenta de teste feita pra humano — trabalha com árvore de acessibilidade em vez de screenshot ou seletor CSS frágil. Aguenta re-renderização de página muito melhor que scraping tradicional. |
+| [Context7](docs/tools/12-context7.md) | Servidor MCP que injeta documentação de biblioteca atualizada e versionada direto no contexto do agente — evita a API alucinada de um modelo com data de corte enquanto o código do mundo real seguiu evoluindo. 60 mil+ estrelas, citado em praticamente toda lista de "MCP essencial". |
+| [Anthropic Skills](docs/tools/13-anthropics-skills.md) | O repositório oficial da Anthropic com as Skills de referência — geração real de `docx`/`pdf`/`pptx`/`xlsx`, e duas skills "meta" que ensinam a criar suas próprias skills e servidores MCP. Um dos repositórios de IA mais estrelados do GitHub inteiro. |
+| [Chrome DevTools MCP](docs/tools/14-chrome-devtools-mcp.md) | Servidor MCP oficial do time do Chrome — dá ao agente acesso a uma sessão real do navegador pra diagnosticar performance, rede e console ao vivo. Complementa o agent-browser: um automatiza um fluxo, o outro investiga o que está acontecendo nele. |
 
 ### 📋 Prompts prontos
 

@@ -1,6 +1,7 @@
 # [PROJECT NAME]
 
 > Project memory for Claude Code. Keep this file short and high-signal.
+> Also using other AI tools in this repo? Consider a shared `AGENTS.md` as the cross-tool source of truth, imported here with a single `@AGENTS.md` line instead of duplicating content — optional, doesn't change the structure below.
 
 ## Behavioral guidelines
 
@@ -27,32 +28,16 @@ Always use the exact commands here — don't guess.
 
 ## Specialist agent routing table
 
-When work is delegable, dispatch the specialist that matches the task instead of a generic agent. This roster is a starting point — rename or trim it to match the agents you actually have configured.
+When work is delegable, dispatch the specialist that matches the task instead of a generic agent. Below is a starter set — enough to show the pattern without bloating a file that loads into every session. The full ~20-role reference roster (database, devops, product, security-auditor, performance, and more) lives in [`docs/tools/02-subagent-orchestration.md`](https://github.com/soumatheusgomes/vibe-coding-toolkit/blob/main/docs/tools/02-subagent-orchestration.md) of the vibe-coding-toolkit repo this template came from — copy in only the rows your project actually needs.
 
 | Agent | When to use |
 |---|---|
 | `orchestrator` | Coordinates multi-agent or cross-domain tasks by delegating to specialized agents. Use when a task spans multiple domains or needs parallel subagent execution. |
 | `code-reviewer` | Reviews code changes for bugs, security, error handling, and test coverage. Use after editing any source file. |
 | `security-reviewer` | Reviews code for OWASP Top 10 vulnerabilities, hardcoded secrets, broken auth, and dependency CVEs. Use before any merge that touches auth, input handling, or secrets. |
-| `typescript-reviewer` | Reviews TypeScript/JavaScript code for type safety, async correctness, and injection risks. Use after editing non-UI `.ts`/`.js` files. |
-| `react-reviewer` | Reviews React/UI code for hooks rules, component boundaries, accessibility, and render performance. Use after editing `.tsx`/`.jsx` files. |
 | `test-engineer` | Writes unit and integration tests with TDD discipline and edge-case coverage. Use after implementing new logic. |
-| `qa-automation-engineer` | Writes and maintains end-to-end tests and CI/CD quality gates. Use after new user flows are implemented. |
-| `database-architect` | Designs schemas, migrations, indexes, and query strategies. Use when adding tables, changing schemas, or diagnosing slow queries. |
-| `devops-engineer` | Owns deployment, CI/CD pipelines, and infrastructure configuration. Use when deploying, configuring servers, or troubleshooting production incidents. |
 | `backend-specialist` | Implements API endpoints, server-side logic, and persistence. Use when building or modifying backend services. |
 | `frontend-specialist` | Designs and implements UI components, layouts, and frontend performance. Use when building or refactoring UI. |
-| `seo-specialist` | Optimizes metadata, structured data, and crawlability. Use when adding public-facing pages that need search visibility. |
-| `performance-optimizer` | Profiles and fixes bottlenecks — slow endpoints, high memory usage, poor Core Web Vitals. Use after profiling reveals an issue. |
-| `product-manager` | Clarifies ambiguous requirements and prioritizes roadmap decisions. Use before a story exists. |
-| `product-owner` | Translates business objectives into technical specs and acceptance criteria. Use before development starts on a story. |
-| `project-planner` | Breaks features into ordered, executable tasks with acceptance criteria. Use when starting a new feature or significant refactor. |
-| `code-archaeologist` | Reverse-engineers undocumented or legacy code to uncover intent. Use before refactoring unfamiliar code. |
-| `debugger` | Finds the root cause of bugs and crashes through systematic, evidence-based investigation. Use when a test fails or a defect is reported. |
-| `explorer-agent` | Maps an unfamiliar codebase — architecture, patterns, dependencies. Use when onboarding or before a cross-cutting change. |
-| `documentation-writer` | Produces READMEs, API docs, runbooks, and guides. Use when documentation is explicitly requested. |
-| `penetration-tester` | Simulates attacker techniques to find exploitable vulnerabilities. Use before a security release or after adding new auth flows. |
-| `security-auditor` | Performs defensive security reviews and threat modeling. Use before a major release or after changes touching auth or data handling. |
 
 ## Conventions
 

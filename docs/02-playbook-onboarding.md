@@ -280,6 +280,24 @@ qualquer especialista que seu projeto precise e que o roster genérico não
 cubra. O raciocínio completo por trás disso está em [Orquestração de
 subagentes](tools/02-subagent-orchestration.md).
 
+> [!TIP]
+> Se o projeto também usa outras ferramentas de IA além do Claude Code
+> (Cursor, Copilot, Windsurf...), vale conhecer o
+> [AGENTS.md](https://agents.md/) — um padrão aberto de instruções
+> multi-ferramenta nascido em agosto de 2025 de uma colaboração entre
+> OpenAI, Google, Cursor, Factory.ai e Sourcegraph, hoje sob a
+> recém-criada Agentic AI Foundation (Linux Foundation, ao lado do MCP
+> da própria Anthropic), já adotado por 60 mil+ projetos open-source e
+> suportado nativamente por 24+ ferramentas. **Ressalva importante:** o
+> Claude Code não lê `AGENTS.md` nativamente — só lê `CLAUDE.md` ([issue
+> em aberto](https://github.com/anthropics/claude-code/issues/34235),
+> sem sinal de estar no roadmap). A ponte usada pela comunidade (não é
+> recomendação oficial da Anthropic pra esse uso específico) é a sintaxe
+> de import que o Claude Code já documenta oficialmente: mantenha o
+> `AGENTS.md` como fonte única entre ferramentas e, no `CLAUDE.md`, uma
+> linha só — `@AGENTS.md` — importando o conteúdo, em vez de duplicar
+> instrução em dois arquivos que podem divergir.
+
 ### 2. Copie e ajuste o `.claude/settings.json`
 
 ```bash

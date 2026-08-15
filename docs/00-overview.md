@@ -301,3 +301,49 @@ em cada etapa? O [Guia de instalação](01-installation.md) é a referência
 rápida de comandos; o [Playbook de onboarding](02-playbook-onboarding.md) é
 o caminho recomendado — o passo a passo completo, narrado do zero até o
 fluxo inteiro rodando de verdade no seu projeto.
+
+## Leitura complementar oficial
+
+Este repositório é uma curadoria pessoal — o *taste* (o critério, o gosto
+autoral) de uma pessoa só, não uma lista exaustiva de tudo que existe sobre
+o assunto. Pra quem quer ir direto à fonte oficial, ou quer um catálogo bem
+mais completo do que um recorte com opinião, seguem os links.
+
+**Material oficial da Anthropic, pra quem quer ir na fonte:**
+
+- [Claude Code: Best Practices](https://code.claude.com/docs/en/best-practices)
+  — a documentação oficial mais próxima do que este repositório tenta ser,
+  mantida ativamente.
+- [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)
+  (dez/2024) — o post clássico que nomeia os padrões de arquitetura de
+  agente; o "orchestrator-workers" que a seção de orquestração deste
+  repositório usa como base vem de lá.
+- [Multi-Agent Systems: When to Use Them](https://claude.com/blog/building-multi-agent-systems-when-and-how-to-use-them)
+  (jan/2026) — já citado em
+  [tools/02-subagent-orchestration.md](tools/02-subagent-orchestration.md),
+  linkado aqui também.
+- [Guia oficial de prompt engineering](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview).
+- [Claude Cookbooks](https://github.com/anthropics/claude-cookbooks) (51
+  mil+ estrelas) — exemplos práticos de código.
+
+**Pra quem quer mais do que uma curadoria pessoal:**
+
+- [`hesreallyhim/awesome-claude-code`](https://github.com/hesreallyhim/awesome-claude-code)
+  (52 mil+ estrelas) — lista curada por muita gente, cobre skills,
+  comandos, hooks e subagents especificamente pra Claude Code.
+- [`wshobson/agents`](https://github.com/wshobson/agents) (38 mil+
+  estrelas) — coleção pronta com 200+ subagentes especialistas de nicho,
+  além do roster genérico que este repositório mostra em
+  [tools/02-subagent-orchestration.md](tools/02-subagent-orchestration.md).
+
+E se esse recorte específico não for pra você, existem metodologias
+completas alternativas, com filosofia diferente da usada aqui — mais
+estruturadas e mais pesadas de propósito. O [GitHub Spec
+Kit](https://github.com/github/spec-kit) (*spec-driven development* —
+desenvolvimento guiado por uma especificação formal escrita antes do
+código, 128 mil+ estrelas) e o
+[BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) (simula um
+time ágil completo, com personas como PM e arquiteto, 51 mil+ estrelas)
+competem e se sobrepõem com a proposta de
+[Superpowers](tools/01-superpowers.md) + `aia-harness` já coberta aqui —
+não é uma recomendação de usar as duas coisas juntas.

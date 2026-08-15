@@ -10,7 +10,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Feito para Claude Code](https://img.shields.io/badge/feito%20para-Claude%20Code-CC785C.svg)](https://docs.claude.com/en/docs/claude-code)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/soumatheusgomes/vibe-coding-toolkit/pulls)
-[![Feito no Brasil](https://img.shields.io/badge/feito%20no-Brasil%20%F0%9F%87%A7%F0%9F%87%B7-009c3b.svg)](https://instagram.com/soumatheusgomes)
+[![Feito no Brasil](https://img.shields.io/badge/feito%20no-Brasil%20%F0%9F%87%A7%F0%9F%87%B7-009c3b.svg)](https://instagram.com/matheusgomes)
 
 </div>
 
@@ -22,7 +22,7 @@ Programar com IA parece simples até você perceber que "colar um prompt grande 
 
 Cada peça daqui existe porque resolveu um problema real: sessões que perdiam o fio da meada, agentes que construíam mais do que o pedido, warnings de lint (avisos de uma ferramenta que analisa o código atrás de padrões arriscados, sem precisar executá-lo) que ninguém nunca zerava, lições caras que se repetiam a cada sessão nova porque nada ficava registrado. Nada foi adicionado só "porque parecia legal" — se está aqui, é porque já evitou um problema de verdade pelo menos uma vez.
 
-Sou o Matheus Gomes — no Instagram ([@soumatheusgomes](https://instagram.com/soumatheusgomes)) falo sobre prompt e IA pra devs — e esse repositório é a versão organizada, testável e sem enrolação de tudo que venho ensinando por lá.
+Sou o Matheus Gomes — no Instagram ([@matheusgomes](https://instagram.com/matheusgomes)) falo sobre prompt e IA pra devs — e esse repositório é a versão organizada, testável e sem enrolação de tudo que venho ensinando por lá.
 
 **Pra quem é:** devs de qualquer nível — se um termo técnico aparecer, ele é explicado ali mesmo, na primeira vez — que já usam ou estão testando Claude Code / Codex e querem um fluxo estruturado em vez de tentativa e erro.
 
@@ -183,7 +183,7 @@ Este projeto está sob licença [MIT](LICENSE) — use, copie, adapte, redistrib
 
 ## <a id="vamos-juntos"></a>👋 Vamos juntos
 
-Se esse fluxo te ajudou, valeu passar por aqui — e se você quer mais dicas de prompt e IA no dia a dia, [me segue no Instagram](https://instagram.com/soumatheusgomes) ([@soumatheusgomes](https://instagram.com/soumatheusgomes)). Contribuições, issues e PRs são bem-vindos — abre um lá no [GitHub](https://github.com/soumatheusgomes/vibe-coding-toolkit).
+Se esse fluxo te ajudou, valeu passar por aqui — e se você quer mais dicas de prompt e IA no dia a dia, [me segue no Instagram](https://instagram.com/matheusgomes) ([@matheusgomes](https://instagram.com/matheusgomes)). Contribuições, issues e PRs são bem-vindos — abre um lá no [GitHub](https://github.com/soumatheusgomes/vibe-coding-toolkit).
 
 <div align="center">
 

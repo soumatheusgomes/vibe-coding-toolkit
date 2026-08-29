@@ -28,7 +28,7 @@ Always use the exact commands here — don't guess.
 
 ## Specialist agent routing table
 
-When work is delegable, dispatch the specialist that matches the task instead of a generic agent. Below is a starter set — enough to show the pattern without bloating a file that loads into every session. The full ~20-role reference roster (database, devops, product, security-auditor, performance, and more) lives in [`docs/tools/02-subagent-orchestration.md`](https://github.com/soumatheusgomes/vibe-coding-toolkit/blob/main/docs/tools/02-subagent-orchestration.md) of the vibe-coding-toolkit repo this template came from — copy in only the rows your project actually needs.
+When work is delegable, dispatch the specialist that matches the task instead of a generic agent. Below is a starter set — enough to show the pattern without bloating a file that loads into every session. The full 23-role reference roster (database, devops, product, security-auditor, performance, and more) lives in [`docs/tools/02-subagent-orchestration.md`](https://github.com/soumatheusgomes/vibe-coding-toolkit/blob/main/docs/tools/02-subagent-orchestration.md) of the vibe-coding-toolkit repo this template came from — copy in only the rows your project actually needs.
 
 | Agent | When to use |
 |---|---|

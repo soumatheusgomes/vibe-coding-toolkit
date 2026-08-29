@@ -267,10 +267,15 @@ primeiro, mudanças cirúrgicas, execução orientada a objetivo, orquestrador
 em vez de implementador) já vêm prontas e genéricas o bastante pra
 qualquer stack — normalmente não precisam de edição.
 
-**A tabela de agentes especialistas.** O template já vem com um roster de
-mais de vinte especialistas prontos — de `backend-specialist` a
-`security-auditor`, passando por `code-reviewer`, `database-architect`,
-`test-engineer` e outros — cada um com uma linha de "quando usar" que
+**A tabela de agentes especialistas.** O template vem com um *starter set* de
+seis especialistas — `orchestrator`, `code-reviewer`, `security-reviewer`,
+`test-engineer`, `backend-specialist` e `frontend-specialist` —, enxuto de
+propósito, porque esse arquivo carrega em toda sessão. O roster de referência
+completo, com 23 papéis (`database-architect`, `devops-engineer`,
+`security-auditor`, `performance-optimizer` e os demais), fica em
+[Orquestração de subagentes](tools/02-subagent-orchestration.md): copie de lá
+só as linhas que o seu projeto realmente usa. Cada uma traz uma frase de
+"quando usar" que
 funciona ao mesmo tempo como descrição do agente e como regra de
 roteamento: quando uma tarefa bate com a descrição, é aquele especialista
 que você despacha, nunca um agente genérico. É o mecanismo por trás da

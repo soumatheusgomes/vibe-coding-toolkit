@@ -838,3 +838,28 @@ contagem zerar, antes de promover pra `"error"`. Aplicar tudo de uma vez,
 incluindo regras que a base de código ainda viola em centenas de lugares,
 é a receita pra alguém desabilitar o linter inteiro na primeira
 sexta-feira de prazo apertado.
+
+## O caminho executável: a skill
+
+Tudo acima é o raciocínio — por que duas ferramentas, por que aviso vira
+erro, por que a fronteira de arquitetura mora no lint. Se você quer o
+resultado sem reconstruir o raciocínio, a versão executável está em
+[`templates/skills/eslint-quality-gates/`](../../templates/skills/eslint-quality-gates/).
+
+A pasta é uma skill de Claude Code com as três regras próprias já escritas e
+testadas — teto de tamanho de arquivo, console direto e acesso direto ao
+banco a partir da camada de apresentação — mais os dois esqueletos de
+configuração e um verificador que prova que a cópia chegou íntegra.
+
+Para usar, copie a pasta para `.claude/skills/` do seu projeto e peça ao
+agente para instalar as regras. Ou, sem copiar nada, aponte o agente direto
+para a pasta dentro do clone deste repositório:
+
+> Leia `templates/skills/eslint-quality-gates/SKILL.md` deste clone do
+> vibe-coding-toolkit e siga o procedimento para instalar as regras neste
+> projeto.
+
+O agente detecta a stack, copia as regras, adapta os caminhos, roda o
+verificador e reporta a contagem de violações por regra. Ele não conserta as
+violações — para isso existe o
+[burndown de avisos](../prompts/02-eslint-warning-burndown.md).

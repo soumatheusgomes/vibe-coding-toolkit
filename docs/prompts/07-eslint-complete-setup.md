@@ -14,6 +14,15 @@ completa; ou você simplesmente quer adotar essa filosofia específica
 refatoração, regras caseiras pra invariantes de domínio que nenhum
 plugin genérico cobre) no lugar da configuração que já existe.
 
+> [!TIP]
+> Se você quer o resultado em vez do raciocínio, existe um caminho mais
+> curto: a skill em
+> [`templates/skills/eslint-quality-gates/`](../../templates/skills/eslint-quality-gates/)
+> entrega as três regras próprias já escritas e testadas, com um verificador
+> junto. Este prompt continua sendo o caminho certo quando você quer que o
+> agente monte a configuração raciocinando sobre a sua stack, incluindo as
+> regras específicas de framework que a skill deixa de fora de propósito.
+
 ## Por que funciona
 
 A filosofia central se resume a quatro decisões. Primeiro, só dois

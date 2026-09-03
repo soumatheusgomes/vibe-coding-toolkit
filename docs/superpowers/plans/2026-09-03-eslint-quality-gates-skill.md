@@ -1291,12 +1291,16 @@ Say so and leave it out; do not invent a boundary the project does not have.
 ### 2. Install dependencies
 
 ```bash
-npm i -D eslint@^9 @eslint/js
+npm i -D eslint@^9 @eslint/js@^9
 # TypeScript projects:
 npm i -D typescript-eslint
 # Only if enforcing import boundaries:
 npm i -D eslint-plugin-import-x eslint-import-resolver-typescript
 ```
+
+Pin `@eslint/js` to the same major as `eslint`. Unpinned, npm installs
+`@eslint/js@10`, whose peer range demands `eslint@10`, and the install fails
+with `ERESOLVE could not resolve`.
 
 Use the project's own package manager if it is not npm.
 
@@ -1325,7 +1329,10 @@ not a review:
   name, `layers` to the real presentation directories, `extensions` to the
   component file extension (drop it entirely on a non-React project)
 - The `import-x` zones — rewrite them for the project's real layers, or
-  delete the whole `import-x` block if the project has no layering yet
+  delete the whole `import-x` block if the project has no layering yet. If
+  you delete the block, also delete its two imports at the top of the file
+  and its two entries in the test-file block, or ESLint fails on an unknown
+  rule id
 - The `quality/no-direct-console` "off" block — point it at the real log
   adapter, or delete the block if there is none
 - `globalIgnores` — add the project's build output directories

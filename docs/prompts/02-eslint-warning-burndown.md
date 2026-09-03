@@ -1,5 +1,23 @@
 # ESLint warning burndown
 
+## Atalho: só o link
+
+Se você chegou aqui pela sequência do
+[`08`](08-eslint-quality-gates-install.md) →
+[`09`](09-file-size-refactor.md) e agora quer zerar o que sobrou (console
+direto, acesso a dados fora de lugar, orçamento de complexidade), cole
+esta linha no seu agente:
+
+```
+Leia https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/docs/prompts/02-eslint-warning-burndown.md
+e execute o prompt que está nesse arquivo neste projeto, para o conjunto
+inteiro de avisos restantes. Descubra sozinho os comandos de lint, teste,
+typecheck e build lendo o package.json.
+```
+
+O resto deste documento é o mesmo prompt, aberto, pra quem prefere colar o
+texto inteiro ou escolher uma regra específica em vez do conjunto todo.
+
 ## Quando usar
 
 Se o projeto ainda não tem uma configuração de ESLint decente pra começar,

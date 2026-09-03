@@ -1,6 +1,7 @@
 "use strict";
 
 const {
+  BANNED_CONSOLE_METHODS,
   DEFAULT_MAX_LINES,
   fileName,
   isBaselineIgnored,
@@ -66,6 +67,56 @@ const maxLines = {
   },
 };
 
+const noDirectConsole = {
+  meta: {
+    type: "problem",
+    docs: { description: "Disallow direct console output outside log adapters." },
+    messages: {
+      banned: "Use {{logger}} instead of console.{{method}}().",
+    },
+    schema: [
+      {
+        type: "object",
+        properties: {
+          allow: { type: "array", items: { type: "string" } },
+          logger: { type: "string" },
+        },
+        additionalProperties: false,
+      },
+    ],
+  },
+  create(context) {
+    const options = context.options[0] ?? {};
+    const allow = new Set(options.allow ?? []);
+    const logger = options.logger ?? "the project logging helper";
+    // The project's own log adapter -- the file that IS the console wrapper,
+    // plus anything that must log before the rest of the infrastructure is
+    // reachable -- is exempted with a glob override in the config, not with
+    // a hardcoded list here. Test files are exempt in the rule because every
+    // rule in this plugin treats them the same way.
+    const filename = fileName(context);
+    if (isTestFile(filename)) return {};
+    return {
+      MemberExpression(node) {
+        if (
+          node.object.type === "Identifier" &&
+          node.object.name === "console" &&
+          node.property.type === "Identifier" &&
+          BANNED_CONSOLE_METHODS.has(node.property.name) &&
+          !allow.has(node.property.name)
+        ) {
+          context.report({
+            node,
+            messageId: "banned",
+            data: { logger, method: node.property.name },
+          });
+        }
+      },
+    };
+  },
+};
+
 module.exports = {
   maxLines,
+  noDirectConsole,
 };

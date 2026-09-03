@@ -90,3 +90,56 @@ ruleTester.run("quality/max-lines", plugin.rules["max-lines"], {
 });
 
 console.log("quality/max-lines: ok");
+
+ruleTester.run("quality/no-direct-console", plugin.rules["no-direct-console"], {
+  valid: [
+    {
+      name: "a logging helper is fine",
+      code: "logger.info('hello');",
+      filename: "src/service.ts",
+    },
+    {
+      name: "test files may log freely",
+      code: "console.log('hello');",
+      filename: "src/service.test.ts",
+    },
+    {
+      name: "an allowed method is not reported",
+      code: "console.error('boom');",
+      filename: "src/service.ts",
+      options: [{ allow: ["error"] }],
+    },
+    {
+      name: "a method that is not a console method is not reported",
+      code: "console.render('x');",
+      filename: "src/service.ts",
+    },
+    {
+      name: "an identifier that merely ends in console is not the console",
+      code: "fakeconsole.log('x');",
+      filename: "src/service.ts",
+    },
+  ],
+  invalid: [
+    {
+      name: "a direct console call in production code",
+      code: "console.log('hello');",
+      filename: "src/service.ts",
+      errors: [
+        {
+          messageId: "banned",
+          data: { method: "log", logger: "the project logging helper" },
+        },
+      ],
+    },
+    {
+      name: "the logger option names the replacement in the message",
+      code: "console.warn('hello');",
+      filename: "src/service.ts",
+      options: [{ logger: "logger.warn()" }],
+      errors: [{ messageId: "banned", data: { method: "warn", logger: "logger.warn()" } }],
+    },
+  ],
+});
+
+console.log("quality/no-direct-console: ok");

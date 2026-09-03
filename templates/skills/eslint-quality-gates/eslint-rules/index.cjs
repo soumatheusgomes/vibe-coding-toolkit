@@ -1,9 +1,10 @@
 "use strict";
 
-const { maxLines } = require("./core-rules.cjs");
+const { maxLines, noDirectConsole } = require("./core-rules.cjs");
 
 module.exports = {
   rules: {
     "max-lines": maxLines,
+    "no-direct-console": noDirectConsole,
   },
 };

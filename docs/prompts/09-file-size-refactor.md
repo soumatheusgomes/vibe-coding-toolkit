@@ -1,5 +1,19 @@
 # Quebrar os arquivos gigantes que o teto de linhas revelou
 
+## Atalho: só o link
+
+Depois que o prompt 08 já mediu e te deu a lista de arquivos acima do
+teto, cole esta linha:
+
+```
+Leia https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/docs/prompts/09-file-size-refactor.md
+e execute o prompt que está nesse arquivo neste projeto. Use MAX_LINES=350,
+BATCH_SIZE=3 e RULE_ID=quality/max-lines. Descubra sozinho os comandos de
+lint, teste e typecheck lendo o package.json.
+```
+
+O resto deste documento é o mesmo prompt, aberto.
+
 ## Quando usar
 
 Use este prompt depois que o teto de tamanho por arquivo já está

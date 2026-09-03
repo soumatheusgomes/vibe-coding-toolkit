@@ -1,5 +1,20 @@
 # Instalar os quality gates de ESLint (teto de 350 linhas)
 
+## Atalho: só o link
+
+Se você não quer copiar prompt nenhum, cole esta linha no seu agente. Ela
+funciona em qualquer agente que consiga ler uma URL — Claude Code, Codex,
+Cursor:
+
+```
+Leia https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/docs/prompts/08-eslint-quality-gates-install.md
+e execute o prompt que está nesse arquivo neste projeto. Use MAX_LINES=350
+e o gerenciador de pacotes que você encontrar no repositório.
+```
+
+O resto deste documento é o mesmo prompt, aberto, pra quem prefere colar o
+texto inteiro ou adaptá-lo antes.
+
 ## Quando usar
 
 Use este prompt quando você quer, num projeto JavaScript ou TypeScript

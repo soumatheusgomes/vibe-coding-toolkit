@@ -52,6 +52,32 @@ cp templates/CLAUDE.md.template CLAUDE.md
 
 Isso já deixa o Claude Code instalado, a ferramenta mais importante do toolkit ativa, e o template de instruções de projeto no lugar certo. O resto — orquestração de subagentes, quality gates, memória entre sessões — o Playbook mostra em ordem, com o porquê de cada peça antes do como.
 
+### Ou: só o ESLint, numa linha
+
+Se você não quer instalar nada do toolkit e só quer as regras de lint deste
+repositório valendo no seu projeto — inclusive o teto de **350 linhas por
+arquivo** — cole isto no seu agente (Claude Code, Codex, Cursor, qualquer um
+que leia uma URL):
+
+```
+Leia https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/docs/prompts/08-eslint-quality-gates-install.md
+e execute o prompt que está nesse arquivo neste projeto. Use MAX_LINES=350.
+```
+
+Ele baixa as três regras já escritas e testadas, adapta a configuração pra
+estrutura real do seu projeto, e te devolve a lista de arquivos que passaram
+do teto. Não conserta nada — medir e consertar são trabalhos separados.
+
+Quando quiser que ele conserte, cole a mesma linha trocando `08-` por
+`09-file-size-refactor.md`: aí ele quebra os arquivos grandes em módulos
+menores, cortando por responsabilidade (lógica de negócio, componente de UI,
+acesso a dados) e não por contagem de linha, um arquivo por commit, com
+teste e checagem de tipos rodando entre cada um.
+
+Os dois documentos por extenso:
+[08 — instalar e medir](docs/prompts/08-eslint-quality-gates-install.md) e
+[09 — quebrar os arquivos grandes](docs/prompts/09-file-size-refactor.md).
+
 ## 🧭 Índice
 
 - [💡 Sobre o projeto](#sobre-o-projeto)
@@ -118,7 +144,7 @@ Não existe um único jeito "certo" de percorrer este repositório — depende d
 - **Quer o ESLint configurado, com teto de 350 linhas por arquivo, sem configurar nada à mão?** Cole no seu agente:
   > Leia `https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/docs/prompts/08-eslint-quality-gates-install.md` e execute o prompt que está nesse arquivo neste projeto. Use MAX_LINES=350.
 
-  Ele baixa as regras prontas, adapta pro seu projeto e reporta quantos arquivos passaram do teto. Depois, a mesma linha trocando `08-...` por [`09-file-size-refactor.md`](docs/prompts/09-file-size-refactor.md) faz ele quebrar esses arquivos em módulos menores, um por vez. Detalhes: Cole o [`08-eslint-quality-gates-install.md`](docs/prompts/08-eslint-quality-gates-install.md) no seu agente: ele baixa as regras prontas de [`templates/eslint/`](templates/eslint/), adapta pro seu projeto e mede. Depois cole o [`09-file-size-refactor.md`](docs/prompts/09-file-size-refactor.md) pra ele quebrar os arquivos que estouraram o teto.
+  Ele baixa as regras prontas de [`templates/eslint/`](templates/eslint/), adapta pro seu projeto e reporta quantos arquivos passaram do teto — sem consertar nada. Depois, a mesma linha trocando `08-` por [`09-file-size-refactor.md`](docs/prompts/09-file-size-refactor.md) faz ele quebrar esses arquivos em módulos menores, um por vez, com teste rodando entre cada um.
 
 Um detalhe de idioma, pra não confundir: este README e toda a explicação dentro de `docs/` (o "como", o "por quê", os tutoriais) estão em português — pra você, que me acompanha por aqui, entender tudo sem esforço. A única parte que fica em inglês de propósito são os blocos de prompt prontos pra colar em `docs/prompts/` (o texto que você copia e cola direto num agente de IA) — isso funciona melhor em inglês, universalmente, independente do idioma de quem está lendo a explicação ao redor. Onde um conceito é específico do Claude Code (plugins, hooks, skills), o doc deixa isso explícito — boa parte do resto funciona igual no Codex ou em qualquer outro agente que leia um arquivo de instruções e execute comandos.
 
@@ -164,6 +190,8 @@ Um detalhe de idioma, pra não confundir: este README e toda a explicação dent
 | [Parallel wave dispatch](docs/prompts/05-parallel-wave-dispatch.md) | Prompt pra quebrar uma lista de tarefas em ondas paralelas seguras. As duas regras que sustentam tudo — sem dependência entre tarefas da mesma onda, sem sobreposição de arquivo — são o que evita um agente sobrescrever o trabalho do outro. |
 | [Memory bootstrap](docs/prompts/06-memory-bootstrap.md) | Prompt pra configurar do zero o sistema de memória em duas camadas num projeto novo: um índice rápido sempre carregado, mais um caminho de migração disciplinado pro armazenamento de longo prazo. |
 | [Setup completo de ESLint](docs/prompts/07-eslint-complete-setup.md) | Prompt extenso e opinativo pra montar um `eslint.config.mjs` (ESLint 9, flat config) do zero: erro só pro que é sempre bug, aviso pro que é pressão de refatoração, regras caseiras pra invariante de domínio, lint consciente de tipo isolado num tier separado não-bloqueante. Complementa o burndown acima — use este primeiro pra ter uma config boa, aquele depois pra zerar avisos acumulados. |
+| [Instalar os quality gates (teto de 350 linhas)](docs/prompts/08-eslint-quality-gates-install.md) | **(o atalho)** Prompt que aponta o agente pras três regras já escritas e testadas em `templates/eslint/` — ele copia em vez de escrever, então o resultado é sempre o mesmo código. Instala, adapta pros caminhos reais do seu projeto e mede quantas violações existem por regra; deliberadamente não conserta nenhuma. |
+| [Quebrar os arquivos gigantes](docs/prompts/09-file-size-refactor.md) | O segundo tempo do 08: pega os arquivos que estouraram o teto e os divide em módulos menores. O que faz funcionar é cortar por responsabilidade e não por contagem de linha — e mandar o agente dizer "sem costura natural" e parar, em vez de inventar abstração só pra satisfazer o linter. |
 
 <div align="right"><a href="#topo">▲ voltar ao topo</a></div>
 

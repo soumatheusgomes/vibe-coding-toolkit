@@ -143,3 +143,100 @@ ruleTester.run("quality/no-direct-console", plugin.rules["no-direct-console"], {
 });
 
 console.log("quality/no-direct-console: ok");
+
+const dataAccess = {
+  modules: ["@/db", "@/db/index"],
+  layers: ["/src/app/", "/src/components/"],
+  extensions: [".tsx"],
+};
+
+ruleTester.run(
+  "quality/no-direct-data-access",
+  plugin.rules["no-direct-data-access"],
+  {
+    valid: [
+      {
+        name: "a guarded layer importing something other than the client",
+        code: "import { userColumns } from '@/db';",
+        filename: "/repo/src/app/page.ts",
+        options: [dataAccess],
+      },
+      {
+        name: "a layer that is not guarded may import the client",
+        code: "import { db } from '@/db';",
+        filename: "/repo/src/server/user-repository.ts",
+        options: [dataAccess],
+      },
+      {
+        name: "a module that is not the data module",
+        code: "import { db } from './local-cache';",
+        filename: "/repo/src/app/page.ts",
+        options: [dataAccess],
+      },
+      {
+        name: "test files are exempt",
+        code: "import { db } from '@/db';",
+        filename: "/repo/src/app/page.test.ts",
+        options: [dataAccess],
+      },
+      {
+        name: "a side-effect import pulls no binding",
+        code: "import '@/db';",
+        filename: "/repo/src/app/page.ts",
+        options: [dataAccess],
+      },
+      {
+        name: "a custom binding list does not match the default name",
+        code: "import { db } from '@/db';",
+        filename: "/repo/src/app/page.ts",
+        options: [{ ...dataAccess, bindings: ["prisma"] }],
+      },
+    ],
+    invalid: [
+      {
+        name: "a guarded layer importing the client by name",
+        code: "import { db } from '@/db';",
+        filename: "/repo/src/app/page.ts",
+        options: [dataAccess],
+        errors: [{ messageId: "forbidden", data: { module: "@/db" } }],
+      },
+      {
+        name: "the extensions list guards a file outside the layer paths",
+        code: "import { db } from '@/db';",
+        filename: "/repo/src/widgets/table.tsx",
+        options: [dataAccess],
+        errors: [{ messageId: "forbidden", data: { module: "@/db" } }],
+      },
+      {
+        name: "a default import always counts as pulling the client",
+        code: "import anything from '@/db';",
+        filename: "/repo/src/app/page.ts",
+        options: [dataAccess],
+        errors: [{ messageId: "forbidden", data: { module: "@/db" } }],
+      },
+      {
+        name: "a namespace import always counts as pulling the client",
+        code: "import * as everything from '@/db';",
+        filename: "/repo/src/app/page.ts",
+        options: [dataAccess],
+        errors: [{ messageId: "forbidden", data: { module: "@/db" } }],
+      },
+      {
+        name: "a renamed import is matched on the imported name, not the local one",
+        code: "import { db as database } from '@/db';",
+        filename: "/repo/src/app/page.ts",
+        options: [dataAccess],
+        errors: [{ messageId: "forbidden", data: { module: "@/db" } }],
+      },
+      {
+        name: "a custom binding list matches its own name",
+        code: "import { prisma } from '@/db';",
+        filename: "/repo/src/app/page.ts",
+        options: [{ ...dataAccess, bindings: ["prisma"] }],
+        errors: [{ messageId: "forbidden", data: { module: "@/db" } }],
+      },
+    ],
+  }
+);
+
+console.log("quality/no-direct-data-access: ok");

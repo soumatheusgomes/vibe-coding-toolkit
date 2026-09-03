@@ -9,6 +9,26 @@ const {
   isTestFile,
 } = require("./utils.cjs");
 
+// A default or namespace import pulls whatever the module exports, so it
+// always counts as reaching the client. A named import is matched on the
+// imported name rather than the local alias, so `import { db as database }`
+// is still caught.
+function importsGuardedBinding(node, bindings) {
+  return node.specifiers.some((specifier) => {
+    if (
+      specifier.type === "ImportDefaultSpecifier" ||
+      specifier.type === "ImportNamespaceSpecifier"
+    ) {
+      return true;
+    }
+    return (
+      specifier.type === "ImportSpecifier" &&
+      specifier.imported.type === "Identifier" &&
+      bindings.has(specifier.imported.name)
+    );
+  });
+}
+
 const maxLines = {
   meta: {
     type: "suggestion",
@@ -116,7 +136,62 @@ const noDirectConsole = {
   },
 };
 
+const noDirectDataAccess = {
+  meta: {
+    type: "problem",
+    docs: {
+      description: "Keep the database client out of presentation layers.",
+    },
+    messages: {
+      forbidden:
+        "Do not import {{module}} from this layer; go through a repository or service instead.",
+    },
+    // modules and layers are both required with minItems 1. A rule that is
+    // half-configured should fail loudly at config load, not quietly match
+    // nothing forever.
+    schema: [
+      {
+        type: "object",
+        properties: {
+          modules: { type: "array", items: { type: "string" }, minItems: 1 },
+          layers: { type: "array", items: { type: "string" }, minItems: 1 },
+          bindings: { type: "array", items: { type: "string" } },
+          extensions: { type: "array", items: { type: "string" } },
+        },
+        required: ["modules", "layers"],
+        additionalProperties: false,
+      },
+    ],
+  },
+  create(context) {
+    const options = context.options[0] ?? {};
+    const modules = new Set(options.modules ?? []);
+    const layers = options.layers ?? [];
+    const bindings = new Set(options.bindings ?? ["db"]);
+    const extensions = options.extensions ?? [];
+    const filename = fileName(context);
+    if (isTestFile(filename)) return {};
+    // Two independent ways a file counts as presentation: it sits under one
+    // of the guarded paths, or it carries a guarded extension wherever it
+    // lives. The extension branch exists because a component file is a
+    // component regardless of which directory someone parked it in.
+    const guarded =
+      layers.some((layer) => filename.includes(layer)) ||
+      extensions.some((extension) => filename.endsWith(extension));
+    if (!guarded) return {};
+    return {
+      ImportDeclaration(node) {
+        const source = String(node.source.value);
+        if (!modules.has(source)) return;
+        if (!importsGuardedBinding(node, bindings)) return;
+        context.report({ node, messageId: "forbidden", data: { module: source } });
+      },
+    };
+  },
+};
+
 module.exports = {
   maxLines,
   noDirectConsole,
+  noDirectDataAccess,
 };

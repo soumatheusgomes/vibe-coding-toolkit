@@ -839,27 +839,27 @@ incluindo regras que a base de código ainda viola em centenas de lugares,
 é a receita pra alguém desabilitar o linter inteiro na primeira
 sexta-feira de prazo apertado.
 
-## O caminho executável: a skill
+## O caminho executável: os arquivos prontos
 
 Tudo acima é o raciocínio — por que duas ferramentas, por que aviso vira
 erro, por que a fronteira de arquitetura mora no lint. Se você quer o
-resultado sem reconstruir o raciocínio, a versão executável está em
-[`templates/skills/eslint-quality-gates/`](../../templates/skills/eslint-quality-gates/).
+resultado sem reconstruir o raciocínio, os arquivos que rodam estão em
+[`templates/eslint/`](../../templates/eslint/): as três regras próprias já
+escritas e testadas (teto de tamanho de arquivo, console direto, acesso
+direto ao banco a partir da camada de apresentação), os dois esqueletos de
+configuração, e um verificador que prova que a cópia chegou íntegra.
 
-A pasta é uma skill de Claude Code com as três regras próprias já escritas e
-testadas — teto de tamanho de arquivo, console direto e acesso direto ao
-banco a partir da camada de apresentação — mais os dois esqueletos de
-configuração e um verificador que prova que a cópia chegou íntegra.
+Você não precisa ler esses arquivos pra usá-los. Dois prompts fazem o
+trabalho, nessa ordem:
 
-Para usar, copie a pasta para `.claude/skills/` do seu projeto e peça ao
-agente para instalar as regras. Ou, sem copiar nada, aponte o agente direto
-para a pasta dentro do clone deste repositório:
+1. [`08-eslint-quality-gates-install.md`](../prompts/08-eslint-quality-gates-install.md)
+   — o agente baixa as regras, adapta a configuração pra estrutura real do
+   seu projeto, roda o verificador e reporta quantas violações existem por
+   regra. Ele não conserta nada.
+2. [`09-file-size-refactor.md`](../prompts/09-file-size-refactor.md) — o
+   agente pega os arquivos que estouraram o teto de 350 linhas e os quebra
+   em módulos menores, um arquivo por vez, com testes rodando entre cada
+   um.
 
-> Leia `templates/skills/eslint-quality-gates/SKILL.md` deste clone do
-> vibe-coding-toolkit e siga o procedimento para instalar as regras neste
-> projeto.
-
-O agente detecta a stack, copia as regras, adapta os caminhos, roda o
-verificador e reporta a contagem de violações por regra. Ele não conserta as
-violações — para isso existe o
-[burndown de avisos](../prompts/02-eslint-warning-burndown.md).
+O primeiro instala a régua e mede; o segundo é o trabalho que a medição
+revelou.

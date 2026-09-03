@@ -2,6 +2,15 @@
 
 Data: 2026-09-03
 
+> **Nota de reorganização (03/09/2026):** este documento descreve o desenho
+> original, que empacotava as regras como uma skill de Claude Code em
+> `templates/skills/eslint-quality-gates/`. Depois de escrito, a entrega foi
+> reorganizada para o padrão do próprio repositório: os arquivos vivem em
+> [`templates/eslint/`](../../../templates/eslint/) e a porta de entrada são
+> os prompts [08](../../prompts/08-eslint-quality-gates-install.md) e
+> [09](../../prompts/09-file-size-refactor.md). O raciocínio sobre as regras
+> continua válido; os caminhos citados abaixo, não.
+
 ## Problema
 
 O toolkit documenta bem a filosofia de lint que ele defende: o

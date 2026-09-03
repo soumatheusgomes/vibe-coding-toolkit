@@ -1,5 +1,14 @@
 # ESLint Quality Gates Skill Implementation Plan
 
+> **Nota de reorganização (03/09/2026):** este documento descreve o desenho
+> original, que empacotava as regras como uma skill de Claude Code em
+> `templates/skills/eslint-quality-gates/`. Depois de escrito, a entrega foi
+> reorganizada para o padrão do próprio repositório: os arquivos vivem em
+> [`templates/eslint/`](../../../templates/eslint/) e a porta de entrada são
+> os prompts [08](../../prompts/08-eslint-quality-gates-install.md) e
+> [09](../../prompts/09-file-size-refactor.md). O raciocínio sobre as regras
+> continua válido; os caminhos citados abaixo, não.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Ship a copy-and-run Claude Code skill in `templates/skills/eslint-quality-gates/` that an agent can point at any JavaScript/TypeScript project to install three business-agnostic custom ESLint rules plus a two-tier config skeleton.

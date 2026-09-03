@@ -101,7 +101,11 @@ const target = process.argv[2] ?? "./eslint-rules/index.cjs";
 const plugin = (await import(pathToFileURL(path.resolve(target)).href)).default;
 
 const ruleTester = new RuleTester();
-const lines = (count) => "const value = 1;\n".repeat(count);
+// Unique identifiers per line: repeating one declaration would collide
+// with itself and fail as a parse error before any rule ever runs.
+const lines = (count) =>
+  Array.from({ length: count }, (_, i) => `const value${i} = ${i};`).join("\n") +
+  "\n";
 
 ruleTester.run("quality/max-lines", plugin.rules["max-lines"], {
   valid: [

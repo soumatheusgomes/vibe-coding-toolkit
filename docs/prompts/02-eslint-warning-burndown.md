@@ -2,11 +2,20 @@
 
 ## Quando usar
 
-Se o projeto ainda não tem uma configuração de ESLint decente pra
-começar, use antes o [`07-eslint-complete-setup.md`](07-eslint-complete-setup.md)
-— ele monta a configuração do zero; este prompt aqui serve pra depois,
-quando os avisos de uma configuração já existente acumularam e é hora
-de zerá-los.
+Se o projeto ainda não tem uma configuração de ESLint decente pra começar,
+use antes um dos dois que montam a configuração: o
+[`08-eslint-quality-gates-install.md`](08-eslint-quality-gates-install.md)
+(o atalho — copia três regras prontas e mede) ou o
+[`07-eslint-complete-setup.md`](07-eslint-complete-setup.md) (o completo — o
+agente monta a config raciocinando sobre a sua stack). Este prompt aqui serve
+pra depois, quando os avisos de uma configuração já existente acumularam e é
+hora de zerá-los.
+
+Se os avisos que você quer zerar são especificamente de **tamanho de
+arquivo**, vá direto pro
+[`09-file-size-refactor.md`](09-file-size-refactor.md): quebrar um arquivo de
+800 linhas é um tipo de trabalho diferente de corrigir 240 avisos de
+`complexity`, e aquele prompt é feito só pra isso.
 
 Use este prompt quando você tem uma pilha grande de warnings de lint pra
 zerar — ou quer revisar e reapertar deliberadamente uma regra específica —

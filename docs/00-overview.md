@@ -203,7 +203,9 @@ time já se comprometeu a nunca mais cruzar; outra em aviso, pra uma dívida já
 conhecida, que ainda está sendo paga aos poucos, mas que continua visível
 enquanto isso.
 
-Ver [Quality gates ESLint/Biome](tools/06-eslint-biome-quality-gates.md).
+Ver [Quality gates ESLint/Biome](tools/06-eslint-biome-quality-gates.md) para o
+raciocínio, e [Instalar os quality gates](prompts/08-eslint-quality-gates-install.md)
+quando quiser as regras valendo sem remontá-las.
 
 ## 6. Um grafo de conhecimento do código
 

@@ -595,6 +595,26 @@ Detalhes completos da divisão ESLint/Biome, o formatter desligado de
 propósito, e os gotchas de regras específicas: [Quality gates
 ESLint/Biome](tools/06-eslint-biome-quality-gates.md).
 
+### O atalho, se você não quiser montar isso à mão
+
+Toda a Parte 5 até aqui explica o raciocínio, porque ele vale mais que a
+configuração. Mas se você só quer o resultado — inclusive um teto de **350
+linhas por arquivo**, que é a regra que mais muda como o código cresce —
+existe um caminho de uma linha. Cole no seu agente:
+
+```
+Leia https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/docs/prompts/08-eslint-quality-gates-install.md
+e execute o prompt que está nesse arquivo neste projeto. Use MAX_LINES=350.
+```
+
+Ele baixa três regras já escritas e testadas, adapta a configuração pra sua
+estrutura, e reporta quantos arquivos passaram do teto — sem consertar nada.
+Depois, a mesma linha com [`09-file-size-refactor.md`](prompts/09-file-size-refactor.md)
+faz ele quebrar esses arquivos em módulos menores. Os dois documentos:
+[08 — instalar e medir](prompts/08-eslint-quality-gates-install.md),
+[09 — quebrar os arquivos grandes](prompts/09-file-size-refactor.md).
+
+
 ## Parte 6 — Memória de longo prazo
 
 Sem memória entre sessões, um agente reaprende do zero a mesma lição cara

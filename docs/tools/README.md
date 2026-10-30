@@ -27,6 +27,7 @@ Choose a tool for the current need. For a new foundation, follow the [bootstrap]
 | [21 — shadcn/ui](21-shadcn-ui.md) | Work with an adopted component system |
 | [22 — Sentry MCP](22-sentry-mcp.md) | Investigate errors and performance in a chosen service |
 | [23 — Harness2](23-harness2.md) | Default native harness improvement workflow; optional isolated official CLI lab |
+| [24 — agent-qa](24-agent-qa.md) | Self-improving web/mobile regression testing with memidex memory |
 
 ## Select by scope
 
@@ -40,6 +41,7 @@ Choose a tool for the current need. For a new foundation, follow the [bootstrap]
 | `shadcn` | Existing package runner | Adopted or explicitly selected shadcn/ui |
 | Sentry MCP | OAuth-capable client and authorized account | Chosen Sentry organization/project |
 | Harness2 | Existing agent for the default native adaptation; Git, uv, and compatible Python for a selected isolated CLI lab | Default measured harness workflow in new and existing project setup; official benchmarks require separate dependency, authentication, cost, and isolation decisions |
+| agent-qa | Node.js 24+ and the selected browser/mobile runtime | Application regression tests with an explicitly configured model and target; project-local CLI and task-specific skills |
 
 Evaluate every row during setup. Install applicable instructions in project scope; reuse machine prerequisites. Record unavailable prerequisites and not-applicable choices with reasons. For each adopted capability, record source/revision, client, scope, installation, discovery, actual execution, update method, and pending work. An installed skill, a configured server, and a successful live workflow are different evidence.
 

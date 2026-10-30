@@ -274,6 +274,12 @@ Elige una tarea, abre el prompt y copia el bloque indicado. El [catálogo comple
 | **Revisar y coordinar** | [03 · Revisión de código](docs/prompts/03-multi-agent-code-review.md) · [05 · Oleadas paralelas](docs/prompts/05-parallel-wave-dispatch.md) | Revisión especializada y ejecución independiente |
 | **Mantener el contexto** | [06 · Memoria](docs/prompts/06-memory-bootstrap.md) | Conservar conocimiento útil sin sobrecargar la sesión |
 
+### Auditoría avanzada de seguridad (opcional)
+
+La [guía de uso](docs/08-security-audit.md) explica cómo ejecutar el [prompt 16](docs/prompts/16-security-audit.md) en el proyecto de destino, leer sus cuatro artefactos privados, retomar desde un checkpoint y solicitar correcciones por hallazgo o lote. Se adapta al stack del proyecto y distingue la revisión de código de las evidencias de ejecución.
+
+**Ejecútala como tarea separada, solo mediante una solicitud explícita.** La preparación de la máquina, el onboarding, el bootstrap y la configuración de proyectos existentes no ejecutan esta auditoría automáticamente. El modo predeterminado es `AUDIT`; las correcciones y las pruebas activas requieren su propia autorización. Publica el prompt reutilizable; mantén los informes privados.
+
 <a id="eslint-in-one-line"></a>
 
 ### Adopta un componente a la vez
@@ -343,6 +349,7 @@ vibe-coding-toolkit/
 | [Proyecto existente](docs/prompts/12-existing-project-setup.md) | Adopción completa, actualizaciones y harness |
 | [Validación del toolkit](docs/05-toolkit-validation.md) | Qué se verificó y qué límites permanecen |
 | [Valores predeterminados del proyecto](docs/06-project-defaults.md) | Stack, documentación y criterios de adaptación |
+| [Auditoría avanzada de seguridad](docs/08-security-audit.md) | Auditoría opcional separada, artefactos privados y correcciones por etapas |
 
 ### Herramientas
 

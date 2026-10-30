@@ -47,6 +47,10 @@ After implementation or a fix, the [review convention](tools/02-subagent-orchest
 
 [Harness2 adoption](tools/23-harness2.md) makes measured harness improvement a default part of new and existing project setup through [prompt 15](prompts/15-harness-improvement.md). Establish the native method adaptation, run relevant initial smoke cases, and make the procedure reusable while preserving the current client and authentication. Only observed failures need a candidate comparison. The optional official CLI belongs in a separate lab; its benchmark dependencies, model access, costs, and execution permissions are not enabled by ordinary setup.
 
+## Optional advanced security audit
+
+The [security audit guide](08-security-audit.md) explains [prompt 16](prompts/16-security-audit.md): a broader audit with four private artifacts, dependency/runtime recommendations, remediation batches, and a checkpoint for another session. Run it only on explicit request, separately from machine preparation, onboarding, bootstrap, and existing-project setup. Auditing does not authorize fixes or active testing of deployed services.
+
 <a id="6-a-code-knowledge-graph"></a>
 <a id="7-a-two-layer-memory-system"></a>
 

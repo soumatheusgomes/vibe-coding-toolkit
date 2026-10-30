@@ -272,6 +272,12 @@ Choose a task, open the prompt, and copy the indicated block. The [complete cata
 | **Review and coordinate** | [03 · Code review](docs/prompts/03-multi-agent-code-review.md) · [05 · Parallel waves](docs/prompts/05-parallel-wave-dispatch.md) | Specialist review and independent execution |
 | **Maintain context** | [06 · Memory](docs/prompts/06-memory-bootstrap.md) | Keep useful knowledge without bloating the session |
 
+### Advanced security audit (opt-in)
+
+The [usage guide](docs/08-security-audit.md) explains how to run [prompt 16](docs/prompts/16-security-audit.md) in the target project, read its four private artifacts, resume from a checkpoint, and request remediation by finding or batch. It adapts to the project's stack and separates code review from runtime evidence.
+
+**Run it as a separate task, only on explicit request.** Machine preparation, onboarding, bootstrap, and existing-project setup do not run this audit automatically. The default is `AUDIT`; fixes and active testing require their own authorization. Publish the reusable prompt; keep audit reports private.
+
 <a id="eslint-in-one-line"></a>
 
 ### Adopt one component at a time
@@ -341,6 +347,7 @@ vibe-coding-toolkit/
 | [Existing project](docs/prompts/12-existing-project-setup.md) | Complete adoption, updates, and harness |
 | [Toolkit validation](docs/05-toolkit-validation.md) | What was verified and what limits remain |
 | [Project defaults](docs/06-project-defaults.md) | Stack, documentation, and adaptation criteria |
+| [Advanced security audit](docs/08-security-audit.md) | Separate opt-in audit, private artifacts, and staged remediation |
 
 ### Tools
 

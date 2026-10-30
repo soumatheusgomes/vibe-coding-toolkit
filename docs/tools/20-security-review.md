@@ -2,6 +2,8 @@
 
 Use the reusable [security review prompt](../prompts/13-security-review.md) for a repository baseline or a precise change review. It works in another project's agent session without installing anything. Its default is read-only analysis and a redacted private report outside the repository; fixes are a separate task. It complements ordinary [code review](../prompts/03-multi-agent-code-review.md), lint, and tests.
 
+For a broader audit with four private artifacts, dependency/runtime maintenance recommendations, remediation batches, and a resumable checkpoint, follow the separate [advanced security audit guide](../08-security-audit.md) and [prompt 16](../prompts/16-security-audit.md). That workflow is opt-in and must not run automatically during onboarding or project setup.
+
 Trail of Bits' [`differential-review`](https://github.com/trailofbits/skills/tree/main/plugins/differential-review/skills/differential-review) adds a structured method for security-sensitive changes. Its upstream scope is a diff, not a general baseline audit. The portable prompt supplies the broader entry point without adding a second mandatory skill.
 
 ## Requirements and installation

@@ -127,7 +127,7 @@ Read https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/
 
 [Global setup](docs/03-environment-setup.md) handles system tools, Node.js, Docker, agents, plugins, and integrations. It records versions, scopes, backups, validations, and required interventions. Project setup reuses this environment.
 
-> Paste these texts into a conversation with an agent that has terminal access. Remote shortcuts use the version published on `main`; in an unpublished checkout, use the local file. No setup automatically publishes your application.
+> Paste these texts into a conversation with an agent that has terminal access. Remote shortcuts use the version published on `main`; in an unpublished checkout, use the local file. `main` can change between two pastes, and the agent executes what it reads with your permissions: to run a version you reviewed, replace `main` in the URL with that commit's SHA; prompts fetch their other files from the same revision. No setup automatically publishes your application.
 
 <a id="agents"></a>
 <a id="complete-workflow"></a>

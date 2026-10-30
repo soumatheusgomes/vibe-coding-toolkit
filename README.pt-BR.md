@@ -129,7 +129,7 @@ Leia https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/
 
 O [setup global](docs/03-environment-setup.md) cuida de ferramentas de sistema, Node.js, Docker, agentes, plugins e integrações. Registra versões, escopos, backups, validações e intervenções necessárias. O setup de projeto reutiliza esse ambiente.
 
-> Cole os textos na conversa de um agente com terminal. Os atalhos remotos usam a versão publicada em `main`; em uma cópia ainda não publicada, use o arquivo local. Nenhum setup publica automaticamente sua aplicação.
+> Cole os textos na conversa de um agente com terminal. Os atalhos remotos usam a versão publicada em `main`; em uma cópia ainda não publicada, use o arquivo local. `main` pode mudar entre uma colagem e outra, e o agente executa o que lê com as suas permissões: para rodar uma versão que você revisou, troque `main` na URL pelo SHA desse commit; os prompts buscam os demais arquivos na mesma revisão. Nenhum setup publica automaticamente sua aplicação.
 
 <a id="agents"></a>
 <a id="complete-workflow"></a>

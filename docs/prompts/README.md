@@ -20,5 +20,8 @@ To start a project, use [prompt 11](11-next-project-bootstrap.md). To configure 
 | [14 — Harness evaluation](14-harness-evaluation.md) | Disposable behavioral checks for agent instructions, recovery and review |
 | [15 — Harness improvement](15-harness-improvement.md) | Default native harness workflow for new and existing project setup; optional isolated official CLI lab |
 | [16 — Advanced security audit](16-security-audit.md) | Opt-in audit, four private artifacts, remediation batches, and resumable checkpoints |
+| [17 — Jev adoption](17-jev-adoption.md) | Autonomous, stack-independent assessment with an offline HTML report and copyable next-step prompts |
 
 Prompt 16 is a separate advanced task. Do not run it automatically during machine preparation, onboarding, bootstrap, or existing-project setup. Follow the [security audit usage guide](../08-security-audit.md) when explicitly requested.
+
+Prompt 17 is an optional assessment in the target project, not a setup component. It asks no questions, needs no API key, and does not install Jev. Run a recommended implementation prompt separately; the private API key is supplied only for the later integration.

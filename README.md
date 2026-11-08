@@ -264,6 +264,7 @@ Choose a task, open the prompt, and copy the indicated block. The [complete cata
 |---|---|---|
 | **Prepare everything** | [10 · Machine](docs/prompts/10-development-environment-setup.md) · [11 · New project](docs/prompts/11-next-project-bootstrap.md) · [12 · Existing project](docs/prompts/12-existing-project-setup.md) | Initial installation, complete adoption, or updates |
 | **Understand and plan** | [04 · Brainstorm to plan](docs/prompts/04-brainstorm-to-plan.md) | Turn an ambiguous request into work with acceptance criteria |
+| **Evaluate Jev adoption** | [17 · Jev assessment](docs/prompts/17-jev-adoption.md) | Any stack, no questionnaire or API key; offline HTML recommendations and copyable next-step prompts |
 | **Organize the codebase** | [01 · Sanitation](docs/prompts/01-project-sanitation.md) · [09 · Large files](docs/prompts/09-file-size-refactor.md) | Measure problems and refactor by responsibility |
 | **Evolve lint** | [07 · Complete ESLint](docs/prompts/07-eslint-complete-setup.md) · [08 · Quality gates](docs/prompts/08-eslint-quality-gates-install.md) · [02 · Warnings](docs/prompts/02-eslint-warning-burndown.md) | Install rules, measure legacy code, and reduce violations |
 | **Review security** | [13 · Security review](docs/prompts/13-security-review.md) | Repository baseline or precise diff, evidence and private reporting |

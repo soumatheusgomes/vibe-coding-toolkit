@@ -266,6 +266,7 @@ Escolha a tarefa, abra o prompt e copie o bloco indicado. O [catálogo completo]
 |---|---|---|
 | **Preparar tudo** | [10 · Máquina](docs/prompts/10-development-environment-setup.md) · [11 · Projeto novo](docs/prompts/11-next-project-bootstrap.md) · [12 · Projeto existente](docs/prompts/12-existing-project-setup.md) | Instalação inicial, adoção completa ou atualização |
 | **Entender e planejar** | [04 · Brainstorm até plano](docs/prompts/04-brainstorm-to-plan.md) | Transformar pedido ambíguo em trabalho com aceite |
+| **Avaliar adoção do Jev** | [17 · Avaliação do Jev](docs/prompts/17-jev-adoption.md) | Qualquer stack, sem questionário ou chave de API; recomendações em HTML offline e prompts copiáveis para os próximos passos |
 | **Organizar a base** | [01 · Sanitização](docs/prompts/01-project-sanitation.md) · [09 · Arquivos grandes](docs/prompts/09-file-size-refactor.md) | Medir problemas e refatorar por responsabilidade |
 | **Evoluir o lint** | [07 · ESLint completo](docs/prompts/07-eslint-complete-setup.md) · [08 · Quality gates](docs/prompts/08-eslint-quality-gates-install.md) · [02 · Warnings](docs/prompts/02-eslint-warning-burndown.md) | Instalar regras, medir legado e reduzir violações |
 | **Revisar segurança** | [13 · Revisão de segurança](docs/prompts/13-security-review.md) | Repositório ou diff exato, evidências e relatório privado |

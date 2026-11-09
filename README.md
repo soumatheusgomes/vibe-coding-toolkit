@@ -363,6 +363,7 @@ The [tool catalog](docs/tools/README.md) maintains the complete index, installat
 | [shadcn](docs/tools/21-shadcn-ui.md) | The project uses or selects shadcn/ui |
 | [Sentry MCP](docs/tools/22-sentry-mcp.md) | Investigating a chosen service's errors/performance with authorized access |
 | [Harness2](docs/tools/23-harness2.md) | Comparing harness changes with evidence while keeping native adaptation, official demo, and benchmark results distinct |
+| [agent-qa](docs/tools/24-agent-qa.md) | Running natural-language web/mobile regression tests with memidex memory and self-improvement |
 
 Evaluate every option during setup; activate those that fit the project. Each guide covers requirements, installation, use, verification, and maintenance.
 

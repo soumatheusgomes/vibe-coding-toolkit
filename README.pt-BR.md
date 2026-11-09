@@ -365,6 +365,7 @@ O [catálogo de ferramentas](docs/tools/README.md) mantém o índice completo, o
 | [shadcn](docs/tools/21-shadcn-ui.md) | Projeto usa ou escolhe shadcn/ui |
 | [Sentry MCP](docs/tools/22-sentry-mcp.md) | Investigar erros e desempenho de um serviço escolhido, com acesso autorizado |
 | [Harness2](docs/tools/23-harness2.md) | Comparar mudanças no harness com evidências, distinguindo adaptação nativa, demo oficial e resultados de benchmarks |
+| [agent-qa](docs/tools/24-agent-qa.md) | Executar testes de regressão web/mobile em linguagem natural, com memória memidex e autoaperfeiçoamento |
 
 Avalie todas as opções no setup; ative as que atendem ao projeto. Cada guia cobre requisitos, instalação, uso, verificação e manutenção.
 

@@ -1,0 +1,15 @@
+#!/bin/sh
+# Hooks run with the host's PATH, not the interactive shell's. Desktop apps,
+# IDE integrations, and login shells often skip .zshrc/.bashrc, so a Node
+# installed through nvm or Volta is missing and a bare `node` exits 127.
+# Usage in the hook command: sh .claude/hooks/node.sh .claude/hooks/<hook>.mjs
+if ! command -v node >/dev/null 2>&1; then
+  for dir in "$HOME"/.nvm/versions/node/*/bin "$HOME"/.volta/bin /opt/homebrew/bin /usr/local/bin; do
+    if [ -x "$dir/node" ]; then PATH="$dir:$PATH"; break; fi
+  done
+fi
+if ! command -v node >/dev/null 2>&1; then
+  echo "hook: node not found in the host PATH ($PATH)" >&2
+  exit 1
+fi
+exec node "$@"

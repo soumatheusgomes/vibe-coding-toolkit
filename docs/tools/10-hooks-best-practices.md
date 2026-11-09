@@ -54,6 +54,30 @@ hard security requirement. A hook adding a convenience, such as reminding
 the agent of a project convention, should not fail the same way as one
 enforcing a real security boundary, such as blocking credential-file reads.
 
+### Exit 127: the hook never ran
+
+A hook can fail before its first line executes. The harness starts the
+registered command with **its own** environment, not the one from your
+interactive terminal. Desktop apps, IDE integrations, and login shells often
+skip `.zshrc`/`.bashrc`, so a Node installed through nvm or Volta, loaded only
+by those files, is not on the hook's PATH. The shell then reports
+`node: command not found` and exits with `127`.
+
+Exit `127` is neither allow nor block. In Claude Code, any code other than
+`0` and `2` is a non-blocking error, so the action proceeds: a security hook
+such as the one in the tutorial below silently stops protecting. The same
+hook works from the terminal CLI and fails from the desktop app, which makes
+the cause easy to look for in the wrong place.
+
+Launch the hook through
+[`templates/hooks/node.sh.example`](../../templates/hooks/node.sh.example),
+copied to `.claude/hooks/node.sh`: it uses `node` from PATH when present,
+otherwise checks the common install locations, and exits with a readable
+message instead of `127` when Node is missing. Register
+`sh .claude/hooks/node.sh .claude/hooks/<hook>.mjs` instead of
+`node .claude/hooks/<hook>.mjs`. A bare `node` remains fine when Node is
+installed on the system PATH.
+
 ### The bug worth naming: `JSON.parse("null")`
 
 This bug deserves a name because it is easy to write, difficult to notice
@@ -289,6 +313,19 @@ echo 'null' | node .claude/hooks/protect-env-files.mjs; echo "exit: $?"
 If the third command prints a stack trace instead of `exit: 0`, the hook
 still has the bug; return to Step 3.
 
+These commands run with your terminal's PATH, where `node` is always found.
+Repeat the last one with a minimal environment, closer to what a desktop or
+IDE host provides:
+
+```bash
+# Interpreter lookup → should exit 0; exit 127 means the host cannot find node
+echo 'null' | env -i HOME="$HOME" PATH=/usr/bin:/bin node .claude/hooks/protect-env-files.mjs; echo "exit: $?"
+```
+
+If it prints `exit: 127`, register the hook through the launcher described in
+[Exit 127: the hook never ran](#exit-127-the-hook-never-ran) and run it
+again with `sh .claude/hooks/node.sh` in place of `node`.
+
 ## Concrete examples
 
 Two additional examples, in commented pseudocode, show fail-open outside
@@ -398,6 +435,9 @@ They are useful references even before all are needed:
 - **Test failures as well as the happy path.** Tutorial Step 8, sending
   literal `null` through stdin, is the cheapest test for this specific bug
   and the easiest to forget because the happy path comes to mind first.
+- **Exit `127` points at the environment, not the script.** Rerun the
+  registered command with `env -i HOME="$HOME" PATH=/usr/bin:/bin` before
+  debugging the hook's code.
 - **A convergence worth noticing:** [Ponytail](04-ponytail.md) and
   [Caveman](05-caveman.md), independently built to maintain persistent
   behavior modes throughout a session, arrived at the same hook

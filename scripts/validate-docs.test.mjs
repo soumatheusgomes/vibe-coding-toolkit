@@ -39,6 +39,8 @@ const cases = [
   ["checks anchors in repository URLs", "[Guide](https://github.com/soumatheusgomes/vibe-coding-toolkit/blob/main/guide.md#missing)", 1, "missing anchor"],
   ["checks raw repository shortcuts inside prompts", "```text\nRead https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/missing.md and execute.\n```", 1, "missing.md"],
   ["accepts valid raw repository shortcuts", "```text\nRead https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/guide.md and execute.\n```", 0],
+  ["checks shortcuts pinned to a commit SHA", "```text\nRead https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/790a895304e0c08b70a5b215c9d334f1c86b816c/missing.md and execute.\n```", 1, "missing.md"],
+  ["accepts valid pinned shortcuts", "```text\nRead https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/790a895304e0c08b70a5b215c9d334f1c86b816c/guide.md and execute.\n```", 0],
   ["does not treat fenced HTML examples as actual anchors", "[Example](#example)\n```html\n<a id=\"example\"></a>\n```", 1, "missing anchor"],
 ];
 

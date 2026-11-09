@@ -9,7 +9,7 @@ const files = [...new Set(execFileSync("git", ["ls-files", "--cached", "--others
 const manifest = JSON.parse(await readFile(path.join(root, "templates/project-docs/manifest.json"), "utf8"));
 const destinations = new Map(Object.entries(manifest).map(([destination, source]) => [path.posix.normalize(`templates/project-docs/${source}`), destination]));
 const anchors = new Map();
-const repositoryPrefix = /^https:\/\/(?:raw\.githubusercontent\.com\/soumatheusgomes\/vibe-coding-toolkit\/main\/|github\.com\/soumatheusgomes\/vibe-coding-toolkit\/(?:blob|tree)\/main\/)/;
+const repositoryPrefix = /^https:\/\/(?:raw\.githubusercontent\.com\/soumatheusgomes\/vibe-coding-toolkit\/(?:main|[0-9a-f]{40})\/|github\.com\/soumatheusgomes\/vibe-coding-toolkit\/(?:blob|tree)\/(?:main|[0-9a-f]{40})\/)/;
 
 function getAnchors(text) {
   text = text.replace(/^```[^\n]*\n[\s\S]*?^```/gm, "");

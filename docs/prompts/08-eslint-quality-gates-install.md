@@ -77,7 +77,9 @@ discover almost everything it needs by reading the project.
   `npm` and the agent will correct it after reading the project.
 - **`[SOURCE_URL]`** — where the agent gets the files. If you cloned this
   repository, use the local path `templates/eslint`. Otherwise, use the
-  GitHub raw URL already filled in the prompt.
+  GitHub raw URL already filled in the prompt. Its `main` is resolved to a
+  commit SHA once, so the files and the `verify.mjs` that runs them come
+  from one revision; replace `main` with a SHA you reviewed to pin it.
 
 ## The prompt
 
@@ -91,7 +93,11 @@ this project's real shape.
 
 Fetch these six files into a temporary location from the same revision of
 [SOURCE_URL] (default:
-https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/templates/eslint):
+https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/templates/eslint).
+If the URL names a branch such as `main`, first resolve it to a commit SHA
+(for example `git ls-remote https://github.com/soumatheusgomes/vibe-coding-toolkit.git main`),
+report that SHA, and fetch every file from it; a branch can move between
+two downloads:
 
   eslint-rules/utils.cjs
   eslint-rules/core-rules.cjs
@@ -239,7 +245,8 @@ and routes in `src/app/`. Fill in:
 
 - `[MAX_LINES]` → `350`
 - `[PACKAGE_MANAGER]` → `npm`
-- `[SOURCE_URL]` → the default raw URL, already filled in the prompt
+- `[SOURCE_URL]` → the default raw URL, already filled in the prompt;
+  the agent resolves `main` to a commit SHA in step 0
 
 The agent downloads the six files, reads `tsconfig.json` and discovers the
 alias itself, points `modules` to `@/db`, `layers` to `/src/app/` and

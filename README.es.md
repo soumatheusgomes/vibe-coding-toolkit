@@ -269,7 +269,7 @@ Elige una tarea, abre el prompt y copia el bloque indicado. El [catálogo comple
 | **Evaluar la adopción de Jev** | [17 · Evaluación de Jev](docs/prompts/17-jev-adoption.md) | Cualquier stack, sin cuestionario ni clave de API; recomendaciones en HTML sin conexión y prompts copiables para los próximos pasos |
 | **Organizar la base de código** | [01 · Limpieza](docs/prompts/01-project-sanitation.md) · [09 · Archivos grandes](docs/prompts/09-file-size-refactor.md) | Medir problemas y refactorizar por responsabilidad |
 | **Mejorar el lint** | [07 · ESLint completo](docs/prompts/07-eslint-complete-setup.md) · [08 · Controles de calidad](docs/prompts/08-eslint-quality-gates-install.md) · [02 · Advertencias](docs/prompts/02-eslint-warning-burndown.md) | Instalar reglas, medir código heredado y reducir infracciones |
-| **Revisar seguridad** | [13 · Revisión de seguridad](docs/prompts/13-security-review.md) | Repositorio o diff exacto, evidencias e informe privado |
+| **Revisar seguridad** | [13 · Revisión de seguridad](docs/prompts/13-security-review.md) · [16 · Auditoría avanzada (opcional)](docs/prompts/16-security-audit.md) | Repositorio o diff exacto, evidencias e informe privado |
 | **Evaluar el harness** | [14 · Evaluación del harness](docs/prompts/14-harness-evaluation.md) | Verificar comportamiento tras configurar o cambiar instrucciones/herramientas |
 | **Mejorar el harness** | [15 · Mejora del harness](docs/prompts/15-harness-improvement.md) | Método nativo inspirado en Harness2 por defecto al configurar proyectos nuevos/existentes; laboratorio aislado con CLI oficial opcional |
 | **Revisar y coordinar** | [03 · Revisión de código](docs/prompts/03-multi-agent-code-review.md) · [05 · Oleadas paralelas](docs/prompts/05-parallel-wave-dispatch.md) | Revisión especializada y ejecución independiente |
@@ -350,6 +350,7 @@ vibe-coding-toolkit/
 | [Proyecto existente](docs/prompts/12-existing-project-setup.md) | Adopción completa, actualizaciones y harness |
 | [Validación del toolkit](docs/05-toolkit-validation.md) | Qué se verificó y qué límites permanecen |
 | [Valores predeterminados del proyecto](docs/06-project-defaults.md) | Stack, documentación y criterios de adaptación |
+| [Evaluación del harness](docs/07-harness-evaluation.md) | Tareas desechables que comprueban el comportamiento del harness tras el setup o cambios de instrucciones |
 | [Auditoría avanzada de seguridad](docs/08-security-audit.md) | Auditoría opcional separada, artefactos privados y correcciones por etapas |
 
 ### Herramientas

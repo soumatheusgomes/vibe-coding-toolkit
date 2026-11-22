@@ -267,7 +267,7 @@ Choose a task, open the prompt, and copy the indicated block. The [complete cata
 | **Evaluate Jev adoption** | [17 · Jev assessment](docs/prompts/17-jev-adoption.md) | Any stack, no questionnaire or API key; offline HTML recommendations and copyable next-step prompts |
 | **Organize the codebase** | [01 · Sanitation](docs/prompts/01-project-sanitation.md) · [09 · Large files](docs/prompts/09-file-size-refactor.md) | Measure problems and refactor by responsibility |
 | **Evolve lint** | [07 · Complete ESLint](docs/prompts/07-eslint-complete-setup.md) · [08 · Quality gates](docs/prompts/08-eslint-quality-gates-install.md) · [02 · Warnings](docs/prompts/02-eslint-warning-burndown.md) | Install rules, measure legacy code, and reduce violations |
-| **Review security** | [13 · Security review](docs/prompts/13-security-review.md) | Repository baseline or precise diff, evidence and private reporting |
+| **Review security** | [13 · Security review](docs/prompts/13-security-review.md) · [16 · Advanced audit (opt-in)](docs/prompts/16-security-audit.md) | Repository baseline or precise diff, evidence and private reporting |
 | **Evaluate the harness** | [14 · Harness evaluation](docs/prompts/14-harness-evaluation.md) | Verify behavior after setup or instruction/tool changes |
 | **Improve the harness** | [15 · Harness improvement](docs/prompts/15-harness-improvement.md) | Default native method inspired by Harness2 in new/existing setup; optional isolated official CLI lab |
 | **Review and coordinate** | [03 · Code review](docs/prompts/03-multi-agent-code-review.md) · [05 · Parallel waves](docs/prompts/05-parallel-wave-dispatch.md) | Specialist review and independent execution |
@@ -348,6 +348,7 @@ vibe-coding-toolkit/
 | [Existing project](docs/prompts/12-existing-project-setup.md) | Complete adoption, updates, and harness |
 | [Toolkit validation](docs/05-toolkit-validation.md) | What was verified and what limits remain |
 | [Project defaults](docs/06-project-defaults.md) | Stack, documentation, and adaptation criteria |
+| [Harness evaluation](docs/07-harness-evaluation.md) | Disposable tasks that check harness behavior after setup or instruction changes |
 | [Advanced security audit](docs/08-security-audit.md) | Separate opt-in audit, private artifacts, and staged remediation |
 
 ### Tools

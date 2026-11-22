@@ -269,7 +269,7 @@ Escolha a tarefa, abra o prompt e copie o bloco indicado. O [catálogo completo]
 | **Avaliar adoção do Jev** | [17 · Avaliação do Jev](docs/prompts/17-jev-adoption.md) | Qualquer stack, sem questionário ou chave de API; recomendações em HTML offline e prompts copiáveis para os próximos passos |
 | **Organizar a base** | [01 · Sanitização](docs/prompts/01-project-sanitation.md) · [09 · Arquivos grandes](docs/prompts/09-file-size-refactor.md) | Medir problemas e refatorar por responsabilidade |
 | **Evoluir o lint** | [07 · ESLint completo](docs/prompts/07-eslint-complete-setup.md) · [08 · Quality gates](docs/prompts/08-eslint-quality-gates-install.md) · [02 · Warnings](docs/prompts/02-eslint-warning-burndown.md) | Instalar regras, medir legado e reduzir violações |
-| **Revisar segurança** | [13 · Revisão de segurança](docs/prompts/13-security-review.md) | Repositório ou diff exato, evidências e relatório privado |
+| **Revisar segurança** | [13 · Revisão de segurança](docs/prompts/13-security-review.md) · [16 · Auditoria avançada (opcional)](docs/prompts/16-security-audit.md) | Repositório ou diff exato, evidências e relatório privado |
 | **Avaliar o harness** | [14 · Avaliação do harness](docs/prompts/14-harness-evaluation.md) | Verificar comportamento após setup ou mudanças de instruções/ferramentas |
 | **Melhorar o harness** | [15 · Melhoria do harness](docs/prompts/15-harness-improvement.md) | Método nativo inspirado no Harness2 por padrão no setup novo/existente; laboratório isolado com CLI oficial opcional |
 | **Revisar e coordenar** | [03 · Code review](docs/prompts/03-multi-agent-code-review.md) · [05 · Ondas paralelas](docs/prompts/05-parallel-wave-dispatch.md) | Revisão especializada e execução independente |
@@ -350,6 +350,7 @@ vibe-coding-toolkit/
 | [Projeto existente](docs/prompts/12-existing-project-setup.md) | Adoção completa, atualização e harness |
 | [Validação do toolkit](docs/05-toolkit-validation.md) | O que foi comprovado e quais limites permanecem |
 | [Padrões do projeto](docs/06-project-defaults.md) | Stack, documentação e critérios de adaptação |
+| [Avaliação do harness](docs/07-harness-evaluation.md) | Tarefas descartáveis que conferem o comportamento do harness após o setup ou mudanças de instruções |
 | [Auditoria avançada de segurança](docs/08-security-audit.md) | Auditoria opcional separada, artefatos privados e correções por etapas |
 
 ### Ferramentas

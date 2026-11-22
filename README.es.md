@@ -129,7 +129,7 @@ Lee https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/d
 
 La [configuración global](docs/03-environment-setup.md) se ocupa de las herramientas del sistema, Node.js, Docker, agentes, plugins e integraciones. Registra versiones, ámbitos, copias de seguridad, validaciones e intervenciones necesarias. La configuración del proyecto reutiliza este entorno.
 
-> Pega estos textos en una conversación con un agente que tenga acceso al terminal. Los atajos remotos usan la versión publicada en `main`; en una copia de trabajo aún no publicada, usa el archivo local. Ninguna configuración publica automáticamente tu aplicación.
+> Pega estos textos en una conversación con un agente que tenga acceso al terminal. Los atajos remotos usan la versión publicada en `main`; en una copia de trabajo aún no publicada, usa el archivo local. En repositorios sensibles, cambia `main` en la URL por un SHA de commit revisado, ya que el agente sigue el texto obtenido en el momento de la ejecución. Ninguna configuración publica automáticamente tu aplicación.
 
 <a id="agents"></a>
 <a id="complete-workflow"></a>
@@ -269,7 +269,7 @@ Elige una tarea, abre el prompt y copia el bloque indicado. El [catálogo comple
 | **Evaluar la adopción de Jev** | [17 · Evaluación de Jev](docs/prompts/17-jev-adoption.md) | Cualquier stack, sin cuestionario ni clave de API; recomendaciones en HTML sin conexión y prompts copiables para los próximos pasos |
 | **Organizar la base de código** | [01 · Limpieza](docs/prompts/01-project-sanitation.md) · [09 · Archivos grandes](docs/prompts/09-file-size-refactor.md) | Medir problemas y refactorizar por responsabilidad |
 | **Mejorar el lint** | [07 · ESLint completo](docs/prompts/07-eslint-complete-setup.md) · [08 · Controles de calidad](docs/prompts/08-eslint-quality-gates-install.md) · [02 · Advertencias](docs/prompts/02-eslint-warning-burndown.md) | Instalar reglas, medir código heredado y reducir infracciones |
-| **Revisar seguridad** | [13 · Revisión de seguridad](docs/prompts/13-security-review.md) · [16 · Auditoría avanzada (opcional)](docs/prompts/16-security-audit.md) | Repositorio o diff exacto, evidencias e informe privado |
+| **Revisar seguridad** | [13 · Revisión de seguridad](docs/prompts/13-security-review.md) · [16 · Auditoría avanzada (opcional)](docs/prompts/16-security-audit.md) | Repositorio o diff exacto, evidencias e informe privado; la auditoría avanzada genera cuatro artefactos privados y correcciones en lotes pequeños |
 | **Evaluar el harness** | [14 · Evaluación del harness](docs/prompts/14-harness-evaluation.md) | Verificar comportamiento tras configurar o cambiar instrucciones/herramientas |
 | **Mejorar el harness** | [15 · Mejora del harness](docs/prompts/15-harness-improvement.md) | Método nativo inspirado en Harness2 por defecto al configurar proyectos nuevos/existentes; laboratorio aislado con CLI oficial opcional |
 | **Revisar y coordinar** | [03 · Revisión de código](docs/prompts/03-multi-agent-code-review.md) · [05 · Oleadas paralelas](docs/prompts/05-parallel-wave-dispatch.md) | Revisión especializada y ejecución independiente |

@@ -127,7 +127,7 @@ Read https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/
 
 [Global setup](docs/03-environment-setup.md) handles system tools, Node.js, Docker, agents, plugins, and integrations. It records versions, scopes, backups, validations, and required interventions. Project setup reuses this environment.
 
-> Paste these texts into a conversation with an agent that has terminal access. Remote shortcuts use the version published on `main`; in an unpublished checkout, use the local file. No setup automatically publishes your application.
+> Paste these texts into a conversation with an agent that has terminal access. Remote shortcuts use the version published on `main`; in an unpublished checkout, use the local file. For sensitive repositories, replace `main` in the URL with a reviewed commit SHA, since the agent follows whatever text is fetched at run time. No setup automatically publishes your application.
 
 <a id="agents"></a>
 <a id="complete-workflow"></a>
@@ -267,7 +267,7 @@ Choose a task, open the prompt, and copy the indicated block. The [complete cata
 | **Evaluate Jev adoption** | [17 · Jev assessment](docs/prompts/17-jev-adoption.md) | Any stack, no questionnaire or API key; offline HTML recommendations and copyable next-step prompts |
 | **Organize the codebase** | [01 · Sanitation](docs/prompts/01-project-sanitation.md) · [09 · Large files](docs/prompts/09-file-size-refactor.md) | Measure problems and refactor by responsibility |
 | **Evolve lint** | [07 · Complete ESLint](docs/prompts/07-eslint-complete-setup.md) · [08 · Quality gates](docs/prompts/08-eslint-quality-gates-install.md) · [02 · Warnings](docs/prompts/02-eslint-warning-burndown.md) | Install rules, measure legacy code, and reduce violations |
-| **Review security** | [13 · Security review](docs/prompts/13-security-review.md) · [16 · Advanced audit (opt-in)](docs/prompts/16-security-audit.md) | Repository baseline or precise diff, evidence and private reporting |
+| **Review security** | [13 · Security review](docs/prompts/13-security-review.md) · [16 · Advanced audit (opt-in)](docs/prompts/16-security-audit.md) | Repository baseline or precise diff, evidence and private reporting; the advanced audit adds four private artifacts and remediation in small batches |
 | **Evaluate the harness** | [14 · Harness evaluation](docs/prompts/14-harness-evaluation.md) | Verify behavior after setup or instruction/tool changes |
 | **Improve the harness** | [15 · Harness improvement](docs/prompts/15-harness-improvement.md) | Default native method inspired by Harness2 in new/existing setup; optional isolated official CLI lab |
 | **Review and coordinate** | [03 · Code review](docs/prompts/03-multi-agent-code-review.md) · [05 · Parallel waves](docs/prompts/05-parallel-wave-dispatch.md) | Specialist review and independent execution |
